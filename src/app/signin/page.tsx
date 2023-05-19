@@ -27,6 +27,7 @@ export default function Signin() {
 
   const router = useRouter();
   const createUser = async () => {
+   const type = "create";
     await fetch(`/api/user`, {
       body: JSON.stringify({
         firstName,
@@ -35,6 +36,7 @@ export default function Signin() {
         number,
         sexe,
         password,
+        type
       }),
       headers: {
         "Content-type": "application/json",

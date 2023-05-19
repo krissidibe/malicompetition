@@ -3,25 +3,52 @@ import Image from "next/image";
 import { Inter } from "next/font/google";
 import InputComponent from "../components/InputComponent";
 import ButtonComponent from "../components/ButtonComponent";
+import ModalComponent from "../components/ModalComponent";
 import { EnvelopeIcon, LockClosedIcon } from "@heroicons/react/24/solid";
 import {prima} from '../utils/prisma'
 import { GetServerSideProps, NextPage } from "next";
-import { useEffect } from "react";
- 
+import { useEffect, useState } from "react";
+ import axios from 'axios'
 const inter = Inter({ subsets: ["latin"] });
-
+import { useRouter } from "next/navigation";
 const Home =() => {
-  
+  const [email, setEmail] = useState("");
+  const [number, setNumber] = useState("");
+  const router = useRouter();
+  const [password, setPassword] = useState("");
+  const [showModal, setShowModal] = useState(false);
  
-  const myLoader = () => {
-
-    console.log("notes");
+ const loginUser = ()=>{
+  setShowModal(x => x= true);
+  axios.post('/api/user', {
     
+    email:email,
+    password:password,
+   
+  }).then(function (response) {
+    
+   if(response.data.user != null){
 
-    return `https://www.afro-impact.com/wp-content/uploads/2022/01/meilleure-universite-africaine-.jpg`;
-  };
+    router.push("/user")
+     setShowModal(x => x= false);
+   }else{
+    console.log(response.data);
+    setShowModal(x => x= true);
+   }
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+ }
   return (
+   
     <div className="flex flex-1 w-screen h-screen bg-black ">
+      {showModal && <ModalComponent
+    
+      rightButtonLabel="Retour"
+      rightButtonAction={()=> setShowModal(x => x= false)}
+      content=" Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nihil eum voluptatem, nobis quam laudantium quos harum sit praesentium mollitia labore atque qui perspiciatis. Cum consectetur, quas delectus deleniti quod laudantium."
+      title={"Chargement"} />}
       <div className="flex flex-col items-center justify-between w-full h-full p-10 md:w-1/2 overscroll-y-auto bg-gray-50">
         <div className="md:min-w-[450px] w-[353px] items-center flex space-x-2">
           <Image
@@ -40,13 +67,23 @@ const Home =() => {
             label="Email"
             Icon={EnvelopeIcon}
             withIcon={true}
+            value={email}
+            handleChange={(e) => {
+              setEmail(e.target.value);
+            }}
           />
           <InputComponent
             key={2}
             label="Mot de passe"
+            
             obscureInput={true}
             Icon={LockClosedIcon}
             withIcon={true}
+            value={password}
+            inputType="password"
+            handleChange={(e) => {
+              setPassword(e.target.value);
+            }}
           />
           <div className="flex w-full space-x-4 ">
             <ButtonComponent
@@ -58,8 +95,9 @@ const Home =() => {
 
             <ButtonComponent
               key={4}
+              handleClick={loginUser}
               label="Se connecter"
-              href={"/user"}
+            //  href={"/user"}
               full={true}
             />
           </div>
