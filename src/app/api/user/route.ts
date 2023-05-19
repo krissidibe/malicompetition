@@ -23,6 +23,8 @@ export async function POST(req: NextRequest,res:NextResponse){
           password,
         },
       });
+      console.log("log");
+      
      /*  res.status(200).json(data); */
     } catch (error) {
 /*       res.status(500).json(error); */
