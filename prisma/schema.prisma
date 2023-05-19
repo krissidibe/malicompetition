@@ -1,0 +1,74 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+
+model User {
+  id    Int     @id @default(autoincrement())
+  email String  @unique
+  firstName  String
+  lastName  String
+  number String
+  birthDate DateTime? @db.Date 
+  sexe String
+  password String
+  createdAt DateTime? @db.Timestamp(0) @default(now()) 
+  updatedAt DateTime? @db.Date
+  candidatures Candidature[]
+}
+
+model Competition {
+  id        Int     @id @default(autoincrement())
+  image     String?
+  title     String
+  content   String? @db.LongText
+  statut    String
+  ageMin    Int?
+  ageMax    Int?
+  createdAt DateTime? @db.Timestamp(0) @default(now()) 
+  updatedAt DateTime? @db.Date
+  
+  startDateAt DateTime? @db.Date
+  endDateAt DateTime? @db.Date
+  candidatures Candidature[]
+}
+
+model Candidature {
+  id        Int     @id @default(autoincrement())
+  title     String
+  content   String? @db.LongText
+  statut    String
+  // firstName  String
+  // lastName  String
+  // birthDate DateTime @db.Date 
+ // sexe String
+  nina String
+  certificat String
+  diplome String
+  diplomeNumber String
+  placeOfGraduation String
+  countryOfGraduation String
+  study String
+  speciality String
+  def String?
+  bac String?
+  licence String?
+  master String?
+
+
+  endDateAt DateTime? @db.Date
+  createdAt DateTime? @db.Timestamp(0) @default(now()) 
+  updatedAt DateTime? @db.Date
+  author    User    @relation(fields: [authorId], references: [id])
+  authorId  Int
+  competition    Competition    @relation(fields: [competitionId], references: [id])
+  competitionId  Int
+}
