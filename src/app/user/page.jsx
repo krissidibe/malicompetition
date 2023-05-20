@@ -12,23 +12,7 @@ import {
 
 function Profile() {
 
-  
-  const [windowSize, setWindowSize] = useState([
-    window.innerWidth,
-    window.innerHeight,
-  ]);
-  useEffect(() => {
-    const handleWindowResize = () => {
-      setWindowSize([window.innerWidth, window.innerHeight]);
-    };
-
-    window.addEventListener('resize', handleWindowResize);
-
-    return () => {
-      window.removeEventListener('resize', handleWindowResize);
-    };
-  }, []);
-  console.log(windowSize);
+ 
   return (
     <div className="flex flex-col">
       <div className="flex pb-10 space-x-4 ">
