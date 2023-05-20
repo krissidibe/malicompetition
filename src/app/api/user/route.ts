@@ -1,5 +1,5 @@
 import {NextRequest, NextResponse} from 'next/server'
-import { prima } from "../../../utils/prisma";
+import { prisma } from "../../../utils/prisma";
 
 
 export async function GET(req: NextRequest){
@@ -14,7 +14,7 @@ export async function POST(req: NextRequest,res:NextResponse){
 
   if(type == "create"){
     try {
-      const data =  await prima.user.create({
+      const data =  await prisma.user.create({
           data: {
             firstName,
             lastName,
@@ -33,7 +33,7 @@ export async function POST(req: NextRequest,res:NextResponse){
   }else{
     
     try {
-      const data =  await prima.user.findFirst({
+      const data =  await prisma.user.findFirst({
         where:{
           email:{
             equals: email

@@ -1,28 +1,60 @@
-import React from 'react'
-import CardMiniComponent from '../../components/CardMiniComponent'
-import DataUserCandidatureComponent from '../../components/DataUserCandidatureComponent'
-import { HomeIcon,BookOpenIcon,UserIcon,AcademicCapIcon,ArrowLeftIcon } from '@heroicons/react/24/solid'
+"use client"
+import React,{ useRef,useState ,useEffect}  from "react";
+import CardMiniComponent from "../../components/CardMiniComponent";
+import DataUserCandidatureComponent from "../../components/DataUserCandidatureComponent";
+import {
+  HomeIcon,
+  BookOpenIcon,
+  UserIcon,
+  AcademicCapIcon,
+  ArrowLeftIcon,
+} from "@heroicons/react/24/solid";
 
 function Profile() {
+
+  
+  const [windowSize, setWindowSize] = useState([
+    window.innerWidth,
+    window.innerHeight,
+  ]);
+  useEffect(() => {
+    const handleWindowResize = () => {
+      setWindowSize([window.innerWidth, window.innerHeight]);
+    };
+
+    window.addEventListener('resize', handleWindowResize);
+
+    return () => {
+      window.removeEventListener('resize', handleWindowResize);
+    };
+  }, []);
+  console.log(windowSize);
   return (
-   <div className="flex flex-col">
-  
-    
-   
-   <div className="flex pb-10 space-x-4 ">
-   <CardMiniComponent key={1}  number={"21"} label={"Concours ouverts"} Icon={BookOpenIcon} />
-   <CardMiniComponent key={2}  number={"21"} label={"Concours ouverts"} Icon={AcademicCapIcon} />
-   </div>
-  
-    <div className='pb-2 border-b-2'>
-      <p>Liste des candicatures</p>
+    <div className="flex flex-col">
+      <div className="flex pb-10 space-x-4 ">
+        <CardMiniComponent
+          key={1}
+          number={"21"}
+          label={"Concours ouverts"}
+          Icon={BookOpenIcon}
+        />
+        <CardMiniComponent
+          key={2}
+          number={"21"}
+          label={"Concours ouverts"}
+          Icon={AcademicCapIcon}
+        />
+      </div>
+
+      <div className="pb-2 border-b-2">
+        <p>Liste des candicatures</p>
+      </div>
+      <DataUserCandidatureComponent   />
+      
     </div>
-    <DataUserCandidatureComponent/>
-   
-   </div>
-  )
+  );
 }
 
-export default Profile
+export default Profile;
 
 Profile.layout = "User";

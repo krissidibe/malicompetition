@@ -5,7 +5,7 @@ import InputComponent from "../components/InputComponent";
 import ButtonComponent from "../components/ButtonComponent";
 import ModalComponent from "../components/ModalComponent";
 import { EnvelopeIcon, LockClosedIcon } from "@heroicons/react/24/solid";
-import {prima} from '../utils/prisma'
+ 
 import { GetServerSideProps, NextPage } from "next";
 import { useEffect, useState } from "react";
  import axios from 'axios'
@@ -13,7 +13,7 @@ const inter = Inter({ subsets: ["latin"] });
 import { useRouter } from "next/navigation";
 const Home =() => {
   const [email, setEmail] = useState("");
-  const [number, setNumber] = useState("");
+ 
   const router = useRouter();
   const [password, setPassword] = useState("");
   const [showModal, setShowModal] = useState(false);
@@ -127,15 +127,6 @@ const Home =() => {
   );
 }
 export default Home
-Home.layout = "Default";
+ 
 
-/* export const getServerSideProps: GetServerSideProps  = async () => {
-  // fetching data here
-  const notes =  await  prima.user.findFirst();
-  // Return the data as props
-  return {
-    props: {
-    notes
-    },
-  };
-}; */
+ 

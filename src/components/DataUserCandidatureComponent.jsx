@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState, useEffect } from "react";
 
 import { CustomerService } from "../Services/Candidature";
@@ -14,7 +14,7 @@ const columns = [
   {
     name: "Date Fin",
     selector: (row) => row.dateEnd,
-    sortable:true
+    sortable: true,
   },
   {
     name: "Description",
@@ -23,7 +23,24 @@ const columns = [
   {
     name: "Statut",
     selector: (row) => row.statut,
-    sortable:true
+    sortable: true,
+  },
+];
+const mobileColumns = [
+  {
+    name: "Nom",
+    selector: (row) => row.title,
+  },
+  {
+    name: "Date Fin",
+    selector: (row) => row.dateEnd,
+    sortable: true,
+  },
+
+  {
+    name: "Statut",
+    selector: (row) => row.statut,
+    sortable: true,
   },
 ];
 
@@ -74,20 +91,43 @@ export default function DataUserCandidatureComponent() {
   useEffect(() => {
     CustomerService.getCustomersMedium().then((data) => setCustomers(data));
   }, []);
- 
+
+  /*   <div className="hidden md:block" >   <DataUserCandidatureComponent isMobileScreen={false} /></div>
+  <div className="md:hidden" >   <DataUserCandidatureComponent isMobileScreen={true} /></div> */
   return (
-    <DataTable
-      pagination
-       subHeader
-  subHeaderAlign="right"
-  subHeaderWrap
-  striped
-      fixedHeader={true}
-      noHeader={false}
-      highlightOnHover
-      className="border-2 rounded"
-      columns={columns}
-      data={data}
-    />
+    <>
+      <div className="hidden md:block">
+        {" "}
+        <DataTable
+          pagination
+          subHeader
+          subHeaderAlign="right"
+          subHeaderWrap
+          striped
+          fixedHeader={true}
+          noHeader={false}
+          highlightOnHover
+          className="border-2 rounded"
+          columns={columns}
+          data={data}
+        />
+      </div>
+      <div className="md:hidden">
+        {" "}
+        <DataTable
+          pagination
+          subHeader
+          subHeaderAlign="right"
+          subHeaderWrap
+          striped
+          fixedHeader={true}
+          noHeader={false}
+          highlightOnHover
+          className="border-2 rounded"
+          columns={mobileColumns}
+          data={data}
+        />
+      </div>
+    </>
   );
 }

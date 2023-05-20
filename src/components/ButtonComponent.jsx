@@ -9,7 +9,7 @@ const ButtonComponent = ({label ,full = false ,href = "", handleClick = ()=>{}, 
   if(href != ""){
     return (
    
-      <Link href={href ?? ""} passHref legacyBehavior>
+      <Link href={href ?? ""}  legacyBehavior>
             <button onClick={handleClick}    className={`p-2 px-4  h-[50px] w-full rounded-md ${full ? "bg-blue-500 border-none text-white" : "border-blue-500 border-2 text-blue-500"} ${className}`} >
              {label} </button>
       </Link>
@@ -17,7 +17,7 @@ const ButtonComponent = ({label ,full = false ,href = "", handleClick = ()=>{}, 
   }else{
     return (
    
-      <div className={` h-[45px] w-full  ${className}`}  passHref legacyBehavior>
+      <div className={` h-[45px] w-full  ${className}`}   legacyBehavior>
             <button onClick={handleClick} className={`p-2 px-4  h-[50px] w-full rounded-md ${full ? "bg-blue-500 border-none text-white" : "border-blue-500 border-2 text-blue-500"} ${className}`} >
              {label} </button>
       </div>
