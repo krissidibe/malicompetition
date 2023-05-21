@@ -54,7 +54,7 @@ const Home = () => {
     } else {
       e.preventDefault();
       console.log(data.user);
-      window.sessionStorage.setItem("user", JSON.stringify(data.user));
+      sessionStorage.setItem("user", JSON.stringify(data.user));
       router.push("/user");
 
       return;

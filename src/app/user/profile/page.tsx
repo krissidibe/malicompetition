@@ -44,7 +44,8 @@ function Profile() {
    }
   };
 
-  const user = JSON.parse(sessionStorage.getItem("user") || "" );
+  // @ts-ignore
+  const user = JSON.parse(localStorage.getItem("user") || "" );
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
