@@ -47,7 +47,7 @@ function Profile() {
 
   // @ts-ignore
 
-  const user = JSON.parse(sessionStorage.getItem("user") || "" );
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -56,10 +56,10 @@ function Profile() {
  
   const [message, setMessage] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const getUser = async () => {
+  const getUser = async (email: String) => {
     const res = await fetch(`/api/user`, {
       body: JSON.stringify({
-       email: user.email,
+       email:email,
         type:"user"
       }),
       headers: {
@@ -78,7 +78,8 @@ function Profile() {
   };
 
   useEffect(() => {
-    getUser()
+    const user = JSON.parse(sessionStorage.getItem("user") || "" );
+    getUser(user.email)
 
     return () => {};
   }, []);
