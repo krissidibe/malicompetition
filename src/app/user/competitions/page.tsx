@@ -3,7 +3,7 @@ import CompetitionCardComponent from "../../../components/CompetitionCardCompone
 
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
-import ComptetitionList from "./ComptetitionList";
+import CompetitionList from "./CompetitionList";
 
 function Competitions() {
  // const [search, setSearch] = useState("")
@@ -23,7 +23,7 @@ function Competitions() {
         </div>
       </div>
       {/* @ts-ignore */}
-      <ComptetitionList  /> 
+      <CompetitionList  /> 
 
       <div className="flex flex-col flex-wrap items-center w-full md:flex-row ">
         {/*         <Link href="competitions/1">

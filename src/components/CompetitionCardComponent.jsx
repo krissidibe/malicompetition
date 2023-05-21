@@ -8,7 +8,13 @@ import parse from 'html-react-parser';
 function CompetitionCardComponent({imageUrl,href,data}) {
  //console.log(JSON.parse(data.content).blocks);
 
- 
+ const statutData = [
+  { name: "Brouillon", code: "0", color:"text-black" },
+  { name: "Ouvert", code: "1", color:"text-green-500" },
+  { name: "Fermé", code: "2", color:"text-orange-500" },
+  { name: "Suspendu", code: "3", color:"text-red-500" },
+];
+
 
   return (
     <div    passHref legacyBehavior className="flex flex-col cursor-pointer rounded-lg   h-[360px] shadow-md mr-4 mt-4 ">
@@ -21,7 +27,7 @@ function CompetitionCardComponent({imageUrl,href,data}) {
        
     <div className="flex items-center justify-between ">
     <span className="self-start text-[15px] line-clamp-1 font-semibold px-4 pt-2 text-black flex-1">{data.title}</span>
-        <span className="self-end text-[12px] px-4 pt-2 mb-2 text-green-500">{JSON.parse(data.statut).name}</span>
+        <span className={`self-end text-[12px] px-4 pt-2 mb-2  ${statutData[data.statut].color} `}>{statutData[data.statut].name}</span>
     </div>
       <p className="text-[13px]   text-gray-500 flex-1 px-4 mb-3  line-clamp-3  ">
        {parse(data.content) }.
