@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["referentialActions"]
 }
 
 datasource db {
@@ -11,22 +12,56 @@ datasource db {
 }
 
 
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?  @db.Text
+  access_token       String?  @db.Text
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?  @db.Text
+  session_state      String?
+
+  author    User    @relation(fields: [authorId], references: [id])
+  authorId  String
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  author    User    @relation(fields: [authorId], references: [id])
+  authorId  String
+}
+
+
 model User {
-  id    Int     @id @default(autoincrement())
+  id    String     @id @default(cuid())
   email String  @unique
+  emailVerified Boolean @default(false)
   firstName  String
   lastName  String
   number String
   birthDate DateTime? @db.Date 
   sexe String
   password String
+  role UserRole @default(USER)
   createdAt DateTime? @db.Timestamp(0) @default(now()) 
   updatedAt DateTime? @db.Date
   candidatures Candidature[]
+  accounts      Account[]
+  sessions      Session[]
 }
 
 model Competition {
-  id        Int     @id @default(autoincrement())
+  id        String     @id @default(cuid())
   image     String?
   title     String
   content   String? @db.LongText
@@ -41,8 +76,12 @@ model Competition {
   candidatures Candidature[]
 }
 
+enum UserRole {
+  ADMIN
+  USER
+}
 model Candidature {
-  id        Int     @id @default(autoincrement())
+  id        String     @id @default(cuid())
   title     String
   content   String? @db.LongText
   statut    String
@@ -68,7 +107,7 @@ model Candidature {
   createdAt DateTime? @db.Timestamp(0) @default(now()) 
   updatedAt DateTime? @db.Date
   author    User    @relation(fields: [authorId], references: [id])
-  authorId  Int
+  authorId  String
   competition    Competition    @relation(fields: [competitionId], references: [id])
-  competitionId  Int
+  competitionId  String
 }

@@ -27,8 +27,8 @@ export default function Signin() {
 
   const router = useRouter();
   const createUser = async () => {
-   const type = "create";
-    await fetch(`/api/user`, {
+   
+ const res =   await fetch(`/api/user`, {
       body: JSON.stringify({
         firstName,
         lastName,
@@ -36,25 +36,17 @@ export default function Signin() {
         number,
         sexe,
         password,
-        type
+        type:"create"
       }),
       headers: {
         "Content-type": "application/json",
         'Access-Control-Allow-Origin': '*'
       },
       method: "POST",
-    })
-      .then((value) => {
-        if (value.status == 200) {
-          router.push(`/user`);
-        }else{
-          console.log("email existe deja");
-        }
-      })
-      .catch((error) => {
-        console.log("Error");
-      })
-       
+    }) ;
+    const data = await res.json();
+    console.log(data);
+    
   };
 
   return (

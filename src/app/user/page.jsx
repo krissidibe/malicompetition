@@ -33,6 +33,7 @@ function Profile() {
       <div className="pb-2 border-b-2">
         <p>Liste des candicatures</p>
       </div>
+       
       <DataUserCandidatureComponent   />
       
     </div>

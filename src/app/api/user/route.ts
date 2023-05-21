@@ -1,53 +1,137 @@
-import {NextRequest, NextResponse} from 'next/server'
+import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "../../../utils/prisma";
-
-
-export async function GET(req: NextRequest){
-    const {searchParams}= new URL(req.url)
-    console.log("GET REQUEST");
-    console.log(searchParams.get("name"));
- return new Response(JSON.stringify({name : "john"}))
+import bcrypt from "bcryptjs";
+export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url);
+  console.log("GET REQUEST");
+  console.log(searchParams.get("name"));
+  return new Response(JSON.stringify({ name: "john" }));
 }
 
-export async function POST(req: NextRequest,res:NextResponse){
-  const { email, firstName, lastName, number, sexe, password ,type}  = await req.json();
+export async function POST(req: NextRequest, res: NextResponse) {
+  const { email, firstName, lastName, number, sexe, password, type } =
+    await req.json();
+  //
 
-  if(type == "create"){
+  if (type == "create") {
     try {
-      const data =  await prisma.user.create({
-          data: {
-            firstName,
-            lastName,
-            email,
-            number,
-            sexe,
-            password,
-          },
-        });
-        console.log("log");
-        res.status
-       /*  res.status(200).json(data); */
-      } catch (error) {
-  /*       res.status(500).json(error); */
-      }
-  }else{
+      const user = await prisma.user.findUnique({
+        where: {
+          email,
+        },
+      });
+      if (user != null)
+        return new Response(
+          JSON.stringify({ user: null, message: "L'email existe déjà" })
+        );
+
+      const passwordCryp = await bcrypt.hash(password, 10);
+      const data = await prisma.user.create({
+        data: {
+          firstName,
+          lastName,
+          email,
+          number,
+          sexe,
+          password: passwordCryp,
+        },
+      });
+      return new Response(
+        JSON.stringify({ user: data, message: "Votre compte est créer" })
+      );
+
+      /*  res.status(200).json(data); */
+    } catch (error) {
+      /*       res.status(500).json(error); */
+    }
     
-    try {
-      const data =  await prisma.user.findFirst({
-        where:{
-          email:{
-            equals: email
-          }
-        }
-      })
-      return new Response(JSON.stringify({user:data,error : "succes"}))
-      } catch (error) {
-        return new Response(JSON.stringify({error : "error"}))
-  /*       res.status(500).json(error); */
-      }
-    
-  
   }
+  if (type == "user") {
+    try {
+      const user = await prisma.user.findUnique({
+        where: {
+          email,
+        },
+      });
+      if (user == null)
+        return new Response(
+          JSON.stringify({ user: null, message: "Erreur de récupération" })
+        );
 
+    
+      return new Response(
+        JSON.stringify({ user: user, message: "Votre compte est créer" })
+      );
 
-   }
+      /*  res.status(200).json(data); */
+    } catch (error) {
+      /*       res.status(500).json(error); */
+    }
+  } 
+  
+  
+  else {
+    try {
+      const data = await prisma.user.findUnique({
+        where: {
+          email,
+        },
+      });
+
+      if (data == null)
+        return new Response(
+          JSON.stringify({
+            user: null,
+            message: "L'email n'existe pas veuillez créer votre compte",
+          })
+        );
+
+      const isPasswordValid = await bcrypt.compare(password, data.password);
+      if (!isPasswordValid) {
+        return new Response(
+          JSON.stringify({ user: null, message: "password incorrect" })
+        );
+      }
+
+      return new Response(JSON.stringify({ user: data, message: "succes" }));
+    } catch (error) {
+      return new Response(JSON.stringify({ error: "error" }));
+      /*       res.status(500).json(error); */
+    }
+  }
+}
+
+export async function PATCH(req: NextRequest, res: NextResponse) {
+  const { email, firstName, lastName, number, sexe, password, type } =
+    await req.json();
+  const data = await prisma.user.findFirst({
+    where: {
+      AND: [{ email: email }, { role: "USER" }],
+    },
+  });
+
+  if (data == null)
+    return new Response(
+      JSON.stringify({
+        user: data,
+        message: "L'email n'existe pas veuillez créer votre compte",
+      })
+    );
+
+    const dataUpdate = await prisma.user.update({
+      where: {
+        email: email,
+      },
+      data: {
+       firstName:firstName,
+       lastName:lastName,
+       sexe:sexe
+      },
+    })
+  return new Response(
+    JSON.stringify({
+      user: dataUpdate,
+      message: "Votre profile est modifier",
+    })
+  );
+}
