@@ -5,7 +5,7 @@ import Link from "next/link";
 import { revalidateTag } from 'next/cache'
 import { Competition } from "../../../../../typings";
 const getAllDatas = async () => {
-  const res = await fetch(`/api/user/competition`,{next:{revalidate:5}});
+  const res = await fetch(`https://malicompetition.vercel.app/api/user/competition`,{next:{revalidate:5}});
   const datas:Competition[] = await res.json()
   
   
