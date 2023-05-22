@@ -1,5 +1,5 @@
 import React from "react";
-import { prisma } from "../../../utils/prisma"; 
+import { prisma } from "../../../../utils/prisma";
 import CompetitionCardComponent from "@/components/CompetitionCardComponent";
 import Link from "next/link";
 const getAllDatas = async () => {
@@ -9,43 +9,35 @@ const getAllDatas = async () => {
 
 export default async function CompetitionList() {
   const datas = await prisma.competition.findMany({
-    where:{
-statut:{
-  in:[
-    "1",
-    "2"
-  ]
-}
+    where: {
+      statut: {
+        in: ["1", "2"],
+      },
     },
     orderBy: [
       {
-        createdAt: 'desc',
+        createdAt: "desc",
       },
       {
-        title: 'desc',
+        title: "desc",
       },
     ],
   });
   return (
     <div className="grid items-center w-full sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5 md:flex-row">
-       {datas.map((data) => (
-      <Link  key={data.id} href={`/user/competitions/${data.id}`}>
-              {/* @ts-ignore */}
-        <CompetitionCardComponent
-          key={data.id}
-          data={data}
-          imageUrl={`https://picsum.photos/300/200?random=${data.id}`}
-        />
-      </Link>
-    ))}  
+      {datas.map((data) => (
+        <Link key={data.id} href={`/user/competitions/${data.id}`}>
+          {/* @ts-ignore */}
+          <CompetitionCardComponent
+            key={data.id}
+            data={data}
+            imageUrl={`https://picsum.photos/300/200?random=${data.id}`}
+          />
+        </Link>
+      ))}
     </div>
   );
 }
-
-
-
-
-
 
 /* import React from "react";
 import { prisma } from "../../../utils/prisma";

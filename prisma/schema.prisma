@@ -71,8 +71,8 @@ model Competition {
   createdAt DateTime? @db.Timestamp(0) @default(now()) 
   updatedAt DateTime? @db.Date
   
-  startDateAt DateTime? @db.Date
-  endDateAt DateTime? @db.Date
+  startDateAt DateTime @db.Date
+  endDateAt DateTime @db.Date
   candidatures Candidature[]
 }
 

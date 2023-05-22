@@ -1,7 +1,7 @@
 "use client";
 import React, { FormEvent,useState, useEffect ,useRef} from "react";
-import InputComponent from "../../../components/InputComponent";
-import ButtonComponent from "../../../components/ButtonComponent";
+import InputComponent from "../../../../components/InputComponent";
+import ButtonComponent from "../../../../components/ButtonComponent";
 import { useRouter } from "next/navigation";
 import { Button } from 'primereact/button';
 import { Toast } from 'primereact/toast';
@@ -78,7 +78,7 @@ function Profile() {
   };
 
   useEffect(() => {
-    const user = JSON.parse(sessionStorage.getItem("user") || "" );
+    let user = JSON.parse(window.sessionStorage.getItem("user") || "" );
     getUser(user.email)
 
     return () => {};

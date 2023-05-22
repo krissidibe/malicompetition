@@ -19,12 +19,13 @@ export async function POST(req: NextRequest, res: NextResponse) {
     ageMax,
     ageMin,
   } = await req.json();
+  
  const data = await  prisma.competition.create({
     data:{
       image: image,
         title: title,
         content:valueContent ,
-        statut:JSON.parse(statut).code,
+        statut:statut.code,
         startDateAt: new Date(startDateAt),
         endDateAt: new Date(endDateAt),
         ageMin: parseInt(ageMin),

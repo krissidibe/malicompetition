@@ -1,7 +1,7 @@
 "use client"
 import React,{ useRef,useState ,useEffect}  from "react";
-import CardMiniComponent from "../../components/CardMiniComponent";
-import DataUserCandidatureComponent from "../../components/DataUserCandidatureComponent";
+import CardMiniComponent from "../../../components/CardMiniComponent";
+import DataUserCandidatureComponent from "../../../components/DataUserCandidatureComponent";
 import {
   HomeIcon,
   BookOpenIcon,

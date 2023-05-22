@@ -1,8 +1,8 @@
 "use client"
 import Image from "next/image";
 import { Inter } from "next/font/google";
-import InputComponent from "../../components/InputComponent";
-import ButtonComponent from "../../components/ButtonComponent";
+import InputComponent from "../../../components/InputComponent";
+import ButtonComponent from "../../../components/ButtonComponent";
 import { EnvelopeIcon, LockClosedIcon } from "@heroicons/react/24/solid";
  
 import { GetServerSideProps, NextPage } from "next";

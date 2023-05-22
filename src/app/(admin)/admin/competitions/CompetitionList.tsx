@@ -1,5 +1,5 @@
 import React from "react";
-import { prisma } from "../../../utils/prisma"; 
+import { prisma } from "../../../../utils/prisma"; 
 import CompetitionCardComponent from "@/components/CompetitionCardComponent";
 import Link from "next/link";
 const getAllDatas = async () => {

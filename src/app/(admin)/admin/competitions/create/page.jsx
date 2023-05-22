@@ -1,7 +1,7 @@
 "use client"
 import React, { useState } from "react";
-import ButtonComponent from "../../../../components/ButtonComponent";
-import InputComponent from "../../../../components/InputComponent";
+import ButtonComponent from "../../../../../components/ButtonComponent";
+import InputComponent from "../../../../../components/InputComponent";
 import { XCircleIcon } from "@heroicons/react/24/solid";
 import { EditorState,ContentState, convertFromRaw,convertToRaw } from "draft-js";
 import dynamic from "next/dynamic";
