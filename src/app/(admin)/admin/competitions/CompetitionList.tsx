@@ -3,25 +3,19 @@ import { prisma } from "../../../../utils/prisma";
 import CompetitionCardComponent from "@/components/CompetitionCardComponent";
 import Link from "next/link";
 import { revalidateTag } from 'next/cache'
+import { Competition } from "../../../../../typings";
 const getAllDatas = async () => {
-  const datas = await prisma.competition.findMany();
+  const res = await fetch(`http://localhost:3000/api/user/competition/`,{ cache:"no-cache" ,next:{revalidate:5}});
+  const datas:Competition[] = await res.json()
+  
+  
   return datas;
 };
 
 export default async function CompetitionList() {
-  const res = await fetch('', { cache: 'no-store' })
-  const datas = await prisma.competition.findMany({
-    orderBy: [
-      {
-        createdAt: 'desc',
-      },
-      {
-        title: 'desc',
-      },
-    ],
-  });
-  revalidateTag : true;
-  revalidated : true;
+ 
+  const datas = await  getAllDatas()
+ 
   return (
     <div className="grid items-center w-full sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5 md:flex-row">
        {datas.map((data) => (

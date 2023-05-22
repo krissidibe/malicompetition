@@ -3,35 +3,29 @@ import { prisma } from "../../../../utils/prisma";
 import CompetitionCardComponent from "@/components/CompetitionCardComponent";
 import Link from "next/link";
 import { revalidateTag } from 'next/cache'
+import { Competition } from "../../../../../typings";
+import { useRouter } from "next/router";
 const getAllDatas = async () => {
-  const datas = await prisma.competition.findMany();
+
+  const res = await fetch(`http://localhost:3000/api/admin/competition/`,{ cache:"no-cache" ,next:{revalidate:5}});
+  const datas:Competition[] = await res.json()
+  
+  
   return datas;
 };
 
+
+
 export default async function CompetitionList() {
-  const res = await fetch('', { cache: 'no-store' })
-  const datas = await prisma.competition.findMany({
-    where: {
-      statut: {
-        in: ["1", "2"],
-      },
-    },
-    orderBy: [
-      {
-        createdAt: "desc",
-      },
-      {
-        title: "desc",
-      },
-    ],
-  });
-  revalidateTag : true;
-  revalidated : true;
+ 
+
+  const competition=  await getAllDatas();
+ 
+ 
+  
   return (
     <div className="grid items-center w-full sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5 md:flex-row">
-      
-      
-      {datas.map((data) => (
+           {competition.map((data) => (
         <Link key={data.id} href={`/user/competitions/${data.id}`}>
           {/* @ts-ignore */}
           <CompetitionCardComponent
@@ -41,6 +35,8 @@ export default async function CompetitionList() {
           />
         </Link>
       ))}
+      
+
     </div>
   );
 }

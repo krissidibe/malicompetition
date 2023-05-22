@@ -1,11 +1,24 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "../../../../utils/prisma";
 import bcrypt from "bcryptjs";
+
+
 export async function GET(req: NextRequest) {
-  const { searchParams } = new URL(req.url);
-  console.log("GET REQUEST");
-  console.log(searchParams.get("name"));
-  return new Response(JSON.stringify({ name: "john" }));
+  // const { searchParams } = new URL(req.url);
+
+  const datasPrisma = await prisma.competition.findMany({
+  
+    orderBy: [
+      {
+        createdAt: "desc",
+      },
+      {
+        title: "desc",
+      },
+    ],
+  });
+  //  console.log(searchParams.get("name"));
+  return new Response(JSON.stringify(datasPrisma));
 }
 
 export async function POST(req: NextRequest, res: NextResponse) {
