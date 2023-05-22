@@ -22,7 +22,7 @@ export async function GET(req: NextRequest) {
       ],
     });
     //  console.log(searchParams.get("name"));
-    return new Response(JSON.stringify({datas:"data"}));
+    return new Response(JSON.stringify({datas:datasPrisma}));
   } catch (error) {
     return new Response(JSON.stringify({error:"error"}));
   }
