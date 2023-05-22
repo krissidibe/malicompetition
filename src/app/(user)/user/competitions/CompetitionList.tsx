@@ -9,7 +9,7 @@ const getAllDatas = async () => {
 };
 
 export default async function CompetitionList() {
-  
+  const res = await fetch('', { cache: 'no-store' })
   const datas = await prisma.competition.findMany({
     where: {
       statut: {
