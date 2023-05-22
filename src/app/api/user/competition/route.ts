@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "../../../../utils/prisma";
 import bcrypt from "bcryptjs";
-import { NextApiResponse } from "next";
 
-export async function GET(req: NextRequest,res: NextApiResponse) {
+export async function GET(req: NextRequest) {
   // const { searchParams } = new URL(req.url);
 
   const datasPrisma = await prisma.competition.findMany({
@@ -21,7 +20,6 @@ export async function GET(req: NextRequest,res: NextApiResponse) {
       },
     ],
   });
-  res.status(200).json(datasPrisma);
   //  console.log(searchParams.get("name"));
-  //return new Response(JSON.stringify(datasPrisma));
+  return new Response(JSON.stringify(datasPrisma));
 }
