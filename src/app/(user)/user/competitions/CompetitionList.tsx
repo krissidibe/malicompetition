@@ -14,7 +14,9 @@ const getAllDatas = async () => {
 
 export default async function CompetitionList() {
  
-  //const datas = await  getAllDatas()
+  const datas = await  getAllDatas()
+  console.log(datas);
+  
    {/* @ts-ignore */}
   return (
    <>
