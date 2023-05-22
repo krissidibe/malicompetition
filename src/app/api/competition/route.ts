@@ -22,7 +22,10 @@ export async function GET(req: NextRequest) {
       ],
     });
     //  console.log(searchParams.get("name"));
-    return new Response(JSON.stringify({datas:datasPrisma}));
+    
+    return new Response(
+      JSON.stringify({ user: datasPrisma, message: "Votre compte est créer" })
+    );
   } catch (error) {
     return new Response(JSON.stringify({error:"error"}));
   }
