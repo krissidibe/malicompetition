@@ -5,7 +5,7 @@ import Link from "next/link";
 import { revalidateTag } from 'next/cache'
 import { Competition } from "../../../../../typings";
 const getAllDatas = async () => {
-  const res = await fetch(`http://localhost:3000/api/user/competition/`,{next:{revalidate:5}});
+  const res = await fetch(`${process.env.BASE_URL}/api/user/competition/`,{next:{revalidate:5}});
   const datas:Competition[] = await res.json()
   
   
