@@ -22,7 +22,8 @@ export async function GET(req: NextRequest) {
       ],
     });
     //  console.log(searchParams.get("name"));
-    return new Response(JSON.stringify({datas:datasPrisma}));
+    const obj = JSON.stringify({data:datasPrisma})
+    return new Response(JSON.parse(obj));
   } catch (error) {
     return new Response(JSON.stringify({error:"error"}));
   }
