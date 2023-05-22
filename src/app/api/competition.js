@@ -1,9 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "../../utils/prisma";
-import { NextApiRequest ,NextApiResponse} from "next";
  
-
-export default function handler(req:NextApiRequest, res:NextApiResponse) {
+import { prisma } from "../../utils/prisma";
+ 
+export default function handler(req, res) {
   res.status(200).json({ name: 'John Doe' });
 }
  
