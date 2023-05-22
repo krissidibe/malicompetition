@@ -9,8 +9,6 @@ const getAllDatas = async () => {
 
   const res = await fetch(`http://localhost:3000/api/admin/competition/`,{next:{revalidate:5}});
   const datas:Competition[] = await res.json()
-  
-  
   return datas;
 };
 
