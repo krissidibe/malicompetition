@@ -2,12 +2,14 @@ import React from "react";
 import { prisma } from "../../../../utils/prisma";
 import CompetitionCardComponent from "@/components/CompetitionCardComponent";
 import Link from "next/link";
+import { revalidateTag } from 'next/cache'
 const getAllDatas = async () => {
   const datas = await prisma.competition.findMany();
   return datas;
 };
 
 export default async function CompetitionList() {
+  
   const datas = await prisma.competition.findMany({
     where: {
       statut: {
@@ -23,8 +25,12 @@ export default async function CompetitionList() {
       },
     ],
   });
+  revalidateTag : true;
+  revalidated : true;
   return (
     <div className="grid items-center w-full sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5 md:flex-row">
+      
+      
       {datas.map((data) => (
         <Link key={data.id} href={`/user/competitions/${data.id}`}>
           {/* @ts-ignore */}
