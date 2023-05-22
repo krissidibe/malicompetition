@@ -1,9 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "../../../utils/prisma";
+import { prisma } from "../../utils/prisma";
 import { NextApiRequest ,NextApiResponse} from "next";
  
- 
 
+export default function handler(req:NextApiRequest, res:NextApiResponse) {
+  res.status(200).json({ name: 'John Doe' });
+}
+ 
+/* 
 export default async function handler(req:NextApiRequest, res:NextApiResponse) {
   try {
     const datasPrisma = await prisma.competition.findMany({
@@ -27,4 +31,4 @@ export default async function handler(req:NextApiRequest, res:NextApiResponse) {
   } catch (error) {
     res.status(500).json({ message: 'Error' }); 
   }
-}
+} */
