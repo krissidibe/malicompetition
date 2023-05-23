@@ -23,7 +23,7 @@ export default async function CompetitionList() {
    {/* @ts-ignore */}
   return (
    <>
-  {JSON.stringify(Competitions)}
+ 
    {/*  <div className="grid items-center w-full sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5 md:flex-row">
        {datas.map((data) => (
       <Link  key={data.id} href="competitions/1">
