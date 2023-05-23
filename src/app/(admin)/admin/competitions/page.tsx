@@ -13,7 +13,7 @@ function Competition() {
             className="w-full p-1 px-3   h-[45px] bg-gray-100  outline-none"
             placeholder="Rechercher"
           />
-          <AiFillMessage className="w-6 text-black " />
+         
         </div>
          <ButtonComponent
           href="/admin/competitions/create"

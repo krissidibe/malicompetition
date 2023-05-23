@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
 //import React,{useState} from "react";
-
+import "primereact/resources/themes/lara-light-indigo/theme.css"; // theme
+import "primereact/resources/primereact.css"; 
 import MenuComponent from "../../../components/MenuComponent";
 import SideBarUser from "../../../components/SideBarUser";
 const inter = Inter({ subsets: ["latin"] });

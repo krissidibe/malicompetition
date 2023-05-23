@@ -1,27 +1,23 @@
-import React from "react";
-import { prisma } from "../../../../utils/prisma"; 
+import { FunctionComponent } from "react";
+import { Board } from "../../../../../typings";
+ import {prisma} from '../../../../utils/prisma'
 import CompetitionCardComponent from "@/components/CompetitionCardComponent";
 import Link from "next/link";
-import { revalidateTag } from 'next/cache'
-import { Competition } from "../../../../../typings";
-/* const getAllDatas = async () => {
-  const res = await fetch(`${process.env.BASE_URL}/api/user/competition/`,{next:{revalidate:5}});
-  const datas:Competition[] = await res.json()
- 
-  
-  return datas;
-}; */
 
-export default async function CompetitionList() {
- 
-  //const datas = await  getAllDatas()
-   {/* @ts-ignore */}
+const CompetitionList = async () => {
+  const datas = await prisma.competition.findMany({
+   orderBy:{
+    createdAt:"desc"
+   }
+  })
+  
   return (
-   <>
-   {/*  <div className="grid items-center w-full sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5 md:flex-row">
+    
+    
+     <div className="grid items-center w-full sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5 md:flex-row">
        {datas.map((data) => (
-      <Link  key={data.id} href="competitions/1">
-            
+      <Link  key={data.id} href={`/user/competitions/${data.id}`}>
+           {/*  @ts-ignore */}
         <CompetitionCardComponent
           key={data.id}
           data={data}
@@ -30,6 +26,9 @@ export default async function CompetitionList() {
       </Link>
     ))}  
     </div>
-     */}</>
+    
+    
   );
-}
+};
+
+export default CompetitionList;

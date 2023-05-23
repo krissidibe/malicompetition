@@ -23,6 +23,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/api/hello/hello.ts", "src/app/api/user/route.js", "src/app/(admin)/admin/competitions/create/page.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/api/hello/hello.ts", "src/app/api/user/route.js", "src/app/(admin)/admin/competitions/create/page.jsx", "src/app/(user)/user/competitions/[competitionId]/apply/page.tsx"],
   "exclude": ["node_modules"]
 }
