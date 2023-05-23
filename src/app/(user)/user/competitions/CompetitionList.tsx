@@ -18,7 +18,7 @@ const getAllCompetitions = async () => {
 
 export default async function CompetitionList() {
  
-  const Competitions = await getAllCompetitions()
+   await getAllCompetitions()
   
    {/* @ts-ignore */}
   return (
