@@ -4,9 +4,10 @@ import CompetitionCardComponent from "@/components/CompetitionCardComponent";
 import Link from "next/link";
 import { revalidateTag } from 'next/cache'
 import { Competition } from "../../../../../typings";
+import axios from "axios";
 const getAllCompetitions = async () => {
-  const res = await fetch(`${process.env.BASE_URL}/api/hello`,{next:{revalidate:5}});
-  const data  = await res.json()
+  const res = await axios.get(`${process.env.BASE_URL}/api/hello`)
+  const data  = await res.data
 /*  const Competitions:Competition[] = await res.json()
  
  
@@ -18,12 +19,12 @@ const getAllCompetitions = async () => {
 
 export default async function CompetitionList() {
  
-   await getAllCompetitions()
+ const data =  await getAllCompetitions()
   
    {/* @ts-ignore */}
   return (
    <>
- 
+ {JSON.stringify(data)}
    {/*  <div className="grid items-center w-full sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5 md:flex-row">
        {datas.map((data) => (
       <Link  key={data.id} href="competitions/1">
