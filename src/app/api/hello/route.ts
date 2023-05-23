@@ -4,11 +4,17 @@ import { NextRequest } from "next/server";
  
 
 export async function GET(req: NextRequest) {
-    const { searchParams } = new URL(req.url);
-    console.log("GET REQUEST");
-    console.log(searchParams.get("name"));
-    return new Response(JSON.stringify({ data: [{id:"1"},{id:"2"}]}),{
-      status:200
-    });
-  }
-  
+ const datas = [  {
+  "userId": 1,
+  "id": 1,
+  "title": "delectus aut autem",
+  "completed": false
+},
+{
+  "userId": 1,
+  "id": 2,
+  "title": "quis ut nam facilis et officia qui",
+  "completed": false
+},]
+  return new Response(JSON.stringify(datas));
+}

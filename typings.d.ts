@@ -12,3 +12,9 @@ export type Competition = {
   ageMin: string;
   ageMax: string;
 };
+
+
+type Board = {
+  
+  titre: String;
+}

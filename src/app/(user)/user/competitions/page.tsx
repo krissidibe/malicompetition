@@ -15,7 +15,6 @@ function Competitions() {
 
       <div className="flex flex-col flex-wrap items-center w-full md:flex-row ">
       {/* @ts-ignore */}
-       
       <CompetitionList  /> 
       </div>
     </div>
