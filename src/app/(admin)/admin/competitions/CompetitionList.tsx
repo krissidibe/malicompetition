@@ -6,14 +6,13 @@ import Link from "next/link";
  
 
  
-export const revalidate = 1; 
-async  function getDatas() {
-    const datas = await prisma.competition.findMany({
+   function getDatas() {
+    return prisma.competition.findMany({
     orderBy:{
      createdAt:"desc"
     }
    })
-   return datas;
+  
 }
 
 const CompetitionList = async () => {
@@ -25,7 +24,7 @@ const CompetitionList = async () => {
     
      <div className="grid items-center w-full sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5 md:flex-row">
        {datas.map((data) => (
-      <Link  key={data.id} href={`/user/competitions/${data.id}`}>
+      <Link  passHref key={data.id} href={`/user/competitions/${data.id}`}>
            {/*  @ts-ignore */}
         <CompetitionCardComponent
           key={data.id}
