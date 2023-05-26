@@ -4,7 +4,7 @@ import MagnifyingGlassIcon from "@/components/ButtonComponent";
 import React from "react";
 import { AiFillMessage } from "react-icons/ai";
 import CompetitionList from "./CompetitionList";
-export const dynamic = "force-dynamic";
+ 
 export const revalidate = 0;
 function Competition() {
   return (
