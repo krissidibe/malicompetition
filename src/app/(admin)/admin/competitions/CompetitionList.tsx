@@ -3,7 +3,8 @@ import { Board } from "../../../../../typings";
  import {prisma} from '../../../../utils/prisma'
 import CompetitionCardComponent from "@/components/CompetitionCardComponent";
 import Link from "next/link";
-
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 const CompetitionList = async () => {
   const datas = await prisma.competition.findMany({
    orderBy:{
