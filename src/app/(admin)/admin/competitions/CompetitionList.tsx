@@ -6,7 +6,7 @@ import Link from "next/link";
  
 
  
-
+export const revalidate = 1; 
 async  function getDatas() {
     const datas = await prisma.competition.findMany({
     orderBy:{
