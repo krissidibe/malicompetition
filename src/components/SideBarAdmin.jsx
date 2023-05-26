@@ -1,12 +1,17 @@
 "use client"
-import React,{useState} from "react";
+import React,{useState,useCallback} from "react";
 import PropTypes from "prop-types";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter ,usePathname} from 'next/navigation';
 
 import { HomeIcon,BookOpenIcon,UserIcon,AcademicCapIcon,ArrowLeftIcon ,XCircleIcon} from '@heroicons/react/24/solid'
-const SideBarAdmin = ({show=true,handleClick=()=>{}}) => {
+const SideBarAdmin = ({show=true,handleClick=()=>{
+
+   useRouter().refresh();
+   
+
+}}) => {
   const [canClose, setCanClose] = useState(true);
 
   const toogleClose = ()=> {
@@ -51,6 +56,7 @@ const SideBarAdmin = ({show=true,handleClick=()=>{}}) => {
 export default SideBarAdmin;
 function NavItem({name,href = "",Icon,className="",handleClick}) { 
     const router = usePathname();
+
      
 if(router == "/admin"){
   return (

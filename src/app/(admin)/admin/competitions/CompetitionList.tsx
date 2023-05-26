@@ -3,14 +3,23 @@ import { Board } from "../../../../../typings";
  import {prisma} from '../../../../utils/prisma'
 import CompetitionCardComponent from "@/components/CompetitionCardComponent";
 import Link from "next/link";
+ 
+
+ 
+export const revalidate = 2; 
+async  function getDatas() {
+    const datas = await prisma.competition.findMany({
+    orderBy:{
+     createdAt:"desc"
+    }
+   })
+   return datas;
+}
 
 const CompetitionList = async () => {
-  const datas = await prisma.competition.findMany({
-   orderBy:{
-    createdAt:"desc"
-   }
-  })
   
+  
+  const datas = await getDatas();
   return (
     
     

@@ -10,6 +10,7 @@ import { AiFillPicture } from "react-icons/ai";
 import { Dropdown } from "primereact/dropdown";
 import { Calendar ,CalendarChangeEvent} from "primereact/calendar";
 import { convertToHTML } from 'draft-convert';
+import { redirect } from "next/navigation";
  
 const Editor = dynamic(
   () => import("react-draft-wysiwyg").then((module) => module.Editor),
@@ -49,6 +50,7 @@ function CreateCompetition() {
   ];
 
   const createData = async (e) => {
+    
    
     e.preventDefault()
    /*  alert(content.getCurrentContent())
@@ -73,7 +75,7 @@ function CreateCompetition() {
 
     const data = await res.json()
     console.log(data);
-       
+       redirect("/admin")
   };
 
   return (
