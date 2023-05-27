@@ -10,10 +10,7 @@ export async function GET(req: NextRequest) {
 
   const datasPrisma = await prisma.candidature.findMany({
   
-   /*  where:{
-      authorId:";"
-    },
-     */
+  
     orderBy: [
       {
         createdAt: "desc",

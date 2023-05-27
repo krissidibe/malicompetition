@@ -32,9 +32,8 @@ const mobileColumns = [
     selector: (row) => row.title,
   },
   {
- 
     name: "Date Fin",
-    selector: (row) => row.title,
+    selector: (row) => row.dateEnd,
     sortable: true,
   },
 
@@ -81,16 +80,16 @@ const data = [
     description: "description",
     statut: "statut",
   },
-]; 
+];
 
-export default function DataUserCandidatureComponent({datas}) {
+export default function DataUserCandidatureComponent() {
   const [customers, setCustomers] = useState([]);
 
   const paginatorLeft = <div>k</div>;
   const paginatorRight = <div>k</div>;
 
   useEffect(() => {
-     setCustomers(datas);
+    CustomerService.getCustomersMedium().then((data) => setCustomers(data));
   }, []);
 
   /*   <div className="hidden md:block" >   <DataUserCandidatureComponent isMobileScreen={false} /></div>
