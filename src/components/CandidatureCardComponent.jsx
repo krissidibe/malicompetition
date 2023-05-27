@@ -7,7 +7,7 @@ import {   convertFromRaw,convertToRaw } from "draft-js";
 import parse from 'html-react-parser'; 
 import { useRouter } from "next/navigation";
  
-function CompetitionCardComponent({imageUrl,href,data}) {
+function CandidatureCardComponent({imageUrl,href,data}) {
  //console.log(JSON.parse(data.content).blocks);
 const router = useRouter();
  const statutData = [
@@ -20,8 +20,8 @@ const router = useRouter();
 
   return (
     <div  onClick={()=>{
-      router.push(`/admin/competitions/${data.id}`,{datas:data})
-    }}   passHref legacyBehavior className="flex flex-col cursor-pointer rounded-lg   h-[360px] shadow-md mr-4 mt-4 ">
+      router.push(`/admin/candidatures/${data.id}`,{datas:data})
+    }}   passHref legacyBehavior className="flex flex-col cursor-pointer rounded-lg   h-[568px] shadow-md mr-4 mt-4 ">
       <div className="w-full rounded-t-lg h-1/2 bg-slate-600 ">
         
      <picture>
@@ -33,13 +33,20 @@ const router = useRouter();
     <span className="self-start text-[15px] line-clamp-1 font-semibold px-4 pt-2 text-black flex-1">{data.title}</span>
         <span className={`self-end text-[12px] px-4 pt-2 mb-2  ${statutData[data.statut].color} `}>{statutData[data.statut].name}</span>
     </div>
-      <p className="text-[13px] transition-all duration-700   text-gray-500 flex-1 px-4 mb-3  line-clamp-3  ">
+      <div className="text-[13px] transition-all duration-700   text-gray-500 flex-1 px-4 mb-3  line-clamp-4  ">
        {parse(data.content)}
-      </p>
-      <span className="self-end text-[13px] px-4 text-gray-500 font-semibold border-t-2 pl-10 pt-1 mr-0"><span className="font-normal" >Date de fin</span> :  {new Date(data.endDateAt).toLocaleDateString("fr-FR")}</span>
+      </div>
+      <span className="self-end text-[13px] px-4 text-gray-500 font-semibold border-t-2 pl-10  mr-0"><span className="font-normal" >Date de fin</span> :  {new Date(data.endDateAt).toLocaleDateString("fr-FR")}</span>
+    
+    <div className=" px-4 py-2 my-2 bg-slate-100 border-[1px] border-black text-[13px] ml-4 mr-4">
+    <div className="flex justify-between border-b-[1px] border-black rounded-sm" >  <p className="">Nombre de candidature total</p> <p>750</p> </div>
+    <div className="flex justify-between border-b-[1px] border-black rounded-sm" >  <p className="">Nombre de candidature validée</p> <p className="text-green-500">650</p> </div>
+    <div className="flex justify-between rounded-sm " >  <p className="">Nombre de candidature en cours</p> <p className="text-orange-500">150</p> </div>
+    </div>
+    
       <span className="self-start text-[12px] px-4 py-1 text-blue-500 flex items-center mb-4">Voir plus  <ArrowRightCircleIcon className="w-6 ml-2"/> </span>
     </div>
   );
 }
 
-export default CompetitionCardComponent;
+export default CandidatureCardComponent;

@@ -51,3 +51,56 @@ export async function POST(req: NextRequest, res: NextResponse) {
   );
  
 }
+
+
+export async function PUT(req: NextRequest, res: NextResponse) {
+ 
+  const {
+    title,
+    statut,
+    startDateAt,
+    endDateAt,
+    valueContent,
+    image,
+    ageMax,
+    ageMin,
+    id,
+  } = await req.json();
+  
+ const data = await  prisma.competition.update({
+  where:{
+    id:id
+  },  data:{
+    image: image,
+      title: title,
+      content:valueContent ,
+      statut:statut.code,
+      startDateAt: new Date(startDateAt),
+      endDateAt: new Date(endDateAt),
+      ageMin: parseInt(ageMin),
+      ageMax: parseInt(ageMax),
+  }
+  })
+  return new Response(
+    JSON.stringify({ user: data, message: "Le concours est modifier" })
+  );
+ 
+}
+
+
+
+export async function DELETE(req: NextRequest, res: NextResponse) {
+
+ 
+ 
+ 
+ const data = await  prisma.competition.delete({
+  where:{
+    id:req.nextUrl.searchParams.get("id")?.toString()
+  } 
+  })
+  return new Response(
+    JSON.stringify({ user: data, message: "Le concours est supprimer" })
+  );
+ 
+}

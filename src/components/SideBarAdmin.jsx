@@ -20,7 +20,7 @@ const SideBarAdmin = ({show=true,handleClick=()=>{
 
   //  alert()
   return (
-    <div className={`bg-gray-100 md:w-[260px] w-full ${canClose  ? "" : "hidden"} md:flex  flex flex-col h-screen transition-all ease-in-out p-4 `}>
+    <div className={`bg-neutral-800 md:w-[260px] w-full ${canClose  ? "" : "hidden"} md:flex  flex flex-col h-screen transition-all ease-in-out p-4 `}>
       <div className="md:min-w-[450px] w-[353px] items-center justify-between my-4 flex space-x-2">
      <div className="flex items-center space-x-4">
      <Image
@@ -30,7 +30,7 @@ const SideBarAdmin = ({show=true,handleClick=()=>{
           width="40"
           height="40"
         />
-        <p>Projet Name</p>
+        <p className="text-white" >Projet Name</p>
      </div>
         { show &&
          <XCircleIcon   onClick={toogleClose}  className={ `cursor-pointer w-6 h-6 md:hidden self text-gray-500 group-hover:text-blue-500 transition-all ease-in-out hover:text-blue-500 hover:scale-110 `}   />

@@ -7,26 +7,24 @@ import Link from "next/link";
 export const revalidate = 0;
 const CompetitionList = async () => {
 /*   const datas = await prisma.competition.findMany({
-   orderBy:{
-    createdAt:"desc"
-   }
+
   }) */
   const res = await fetch(`${process.env.BASE_URL}/api/admin/competition`,{next:{revalidate:0}})
   const datas: any[] = await res.json();
   return (
     
-    
+    /* href={`/admin/competitions/${data.id}`} */
      <div className="grid items-center w-full sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5 md:flex-row">
      
        {datas.map((data) => (
-      <Link  key={data.id} href={`/user/competitions/${data.id}`}>
+      <div  key={data.id} >
 {/*            @ts-ignore   */}
         <CompetitionCardComponent
           key={data.id}
           data={data}
           imageUrl={`https://picsum.photos/300/200?random=${data.id}`}
         />
-      </Link>
+      </div>
     ))}  
     </div>
     

@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { Inter } from "next/font/google";
 import InputComponent from "../../components/InputComponent";
+import InputSelectComponent from "../../components/InputSelectComponent";
 import ButtonComponent from "../../components/ButtonComponent";
 import Link from "next/link";
 import {
@@ -21,6 +22,13 @@ export default function Signin() {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [number, setNumber] = useState("");
+  const sexeOptions = [{
+    label :"Homme",value:0,
+  },
+  {
+    label :"Femme",value:1,
+  }
+]
   const [sexe, setSexe] = useState("");
   const [password, setPassword] = useState("");
   const [passwordVeirfy, setPasswordVerify] = useState("");
@@ -105,6 +113,7 @@ export default function Signin() {
             withIcon={true}
             key={3}
             label="Email"
+            
             inputType="email"
           />
 
@@ -119,7 +128,9 @@ export default function Signin() {
               key={4}
               label="Numero de téléphone"
             />
-            <InputComponent
+          
+            <InputSelectComponent
+            options={sexeOptions}
               value={sexe}
               handleChange={(e) => {
                 setSexe(e.target.value);

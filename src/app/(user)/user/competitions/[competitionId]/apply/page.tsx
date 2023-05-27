@@ -4,10 +4,19 @@ import InputComponent from "@/components/InputComponent";
 import React, { FormEvent, useState } from "react";
 
 function Apply() {
-  const [lastName, setLastName] = useState("lastName");
-  const [firstName, setFirstName] = useState("firstName");
-  const [date, setDate] = useState("date");
-  const [sexe, setSexe] = useState("sexe");
+ const user:any = sessionStorage.getItem("user");
+  const [lastName, setLastName] = useState(JSON.parse(user).lastName);
+  const [firstName, setFirstName] = useState(JSON.parse(user).firstName);
+  const [date, setDate] = useState(JSON.parse(user).date);
+
+  const sexeOptions = [{
+    label :"Homme",value:0,
+  },
+  {
+    label :"Femme",value:1,
+  }
+]
+  const [sexe, setSexe] = useState(sexeOptions[JSON.parse(user).sexe].label);
   const [nina, setNina] = useState("");
   const [certificate, setCertificate] = useState("");
   const [diplome, setDiplome] = useState("");
@@ -25,7 +34,7 @@ alert("l")
   return (
     <form onSubmit={createApply} className="flex flex-col w-full h-full p-6 overflow-y-scroll bg-gray-100 rounded-lg shadow-xl md:max-w-7xl ">
       <h1 className="text-[24px] flex justify-between border-black  ">
-        <span> Informations a renseigné</span>
+        <span> Informations a renseigné  </span>
       </h1>
 
       <div className="mt-2 mb-4 border-b border-solid  max-w-[320px]"></div>
