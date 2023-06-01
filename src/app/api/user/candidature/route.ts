@@ -18,7 +18,10 @@ export async function GET(req: NextRequest) {
       {
         title: "desc",
       },
+      
     ],
+    include: { competition: {} },
+     
   });
   
   //  console.log(searchParams.get("name"));
@@ -30,27 +33,70 @@ export async function GET(req: NextRequest) {
 
 
 export async function POST(req: NextRequest, res: NextResponse) {
+   
 
-  /* const {
-    title,
-    statut,
-    startDateAt,
-    endDateAt,
-    valueContent,
-    image,
-    ageMax,
-    ageMin,
+ 
+  const {
+          sexe,
+        nina,
+        certificate,
+        diplome,
+        diplomeNumber,
+        placeOfGraduation,
+        countryOfGraduation,
+        study,
+        speciality,
+        uid,
+        competitionId,
   } = await req.json();
- */
 
+
+
+
+  const competition = await prisma.competition.findFirst({
+    where:{
+ id:competitionId
+    }
+  });
+
+if(!competition){
+  return new Response(
+    JSON.stringify({ data:  "", message: "Competition non trouvé" })
+  );
+}
+
+
+const candidatureCheck = await prisma.candidature.findFirst({
+  where:{
+authorId:uid,
+competitionId: competitionId
+  }
+});
+
+
+if(candidatureCheck){
+  return new Response(
+    JSON.stringify({ data:  candidatureCheck.id, message: "Vous avez déja postuler" })
+  );
+} 
+
+
+  const user = await prisma.user.findFirst({
+    where:{
+ id:uid
+    }
+  });
+
+ 
+ 
   const data = await prisma.candidature.create({
     data: {
       title: "title",
-      statut: "statut",
-      firstName: "firstName",
-      lastName: "lastName",
+      statut: "new",
+      firstName: user?.firstName ?? "",
+      lastName:  user?.lastName ?? "",
       birthDate: new Date(Date.now()),
-      sexe: "sexe",
+      sexe:  user?.sexe ?? "",
       nina: "nina",
       certificat: "certificat",
       diplome: "diplome",
@@ -59,11 +105,11 @@ export async function POST(req: NextRequest, res: NextResponse) {
       countryOfGraduation: "countryOfGraduation",
       study: "study",
       speciality: "speciality",
-      authorId: "cli4xt2bo00006wyl3gs6tr2q",
-      competitionId: "cli5lzbmi00046w5lae3ts4yy",
+      authorId: uid,
+      competitionId: competitionId,
     },
   });
   return new Response(
-    JSON.stringify({ data: data, message: "La candidature est créer" })
+    JSON.stringify({ data: data.id, message: "La candidature est créer" })
   );
 }

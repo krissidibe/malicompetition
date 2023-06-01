@@ -9,16 +9,16 @@ import DataTable from "react-data-table-component";
 const columns = [
   {
     name: "Nom",
-    selector: (row) => row.title,
+    selector: (row) => row.competition.title,
   },
   {
     name: "Date Fin",
-    selector: (row) => row.dateEnd,
+    selector: (row) => row.competition.endDateAt,
     sortable: true,
   },
   {
     name: "Description",
-    selector: (row) => row.description,
+    selector: (row) => row.competition.id,
   },
   {
     name: "Statut",
@@ -29,14 +29,14 @@ const columns = [
 const mobileColumns = [
   {
     name: "Nom",
-    selector: (row) => row.title,
+    selector: (row) => row.competition.title,
   },
   {
     name: "Date Fin",
-    selector: (row) => row.dateEnd,
+    selector: (row) => row.competition.endDateAt,
     sortable: true,
   },
-
+  
   {
     name: "Statut",
     selector: (row) => row.statut,
@@ -82,7 +82,7 @@ const data = [
   },
 ];
 
-export default function DataUserCandidatureComponent() {
+export default function DataUserCandidatureComponent({datas}) {
   const [customers, setCustomers] = useState([]);
 
   const paginatorLeft = <div>k</div>;
@@ -109,7 +109,7 @@ export default function DataUserCandidatureComponent() {
           highlightOnHover
           className="border-2 rounded"
           columns={columns}
-          data={data}
+          data={datas}
         />
       </div>
       <div className="md:hidden">
@@ -125,7 +125,7 @@ export default function DataUserCandidatureComponent() {
           highlightOnHover
           className="border-2 rounded"
           columns={mobileColumns}
-          data={data}
+          data={datas}
         />
       </div>
     </>

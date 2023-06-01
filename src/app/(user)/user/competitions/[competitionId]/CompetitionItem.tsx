@@ -1,3 +1,4 @@
+
 import React from "react";
 import { prisma } from "../../../../../utils/prisma";
 import CompetitionCardComponent from "@/components/CompetitionCardComponent";
@@ -58,7 +59,7 @@ export default async function CompetitionItem({
             key={4}
             label="Postuler"
             className="md:w-[120px]"
-            href={`/user/competitions/${data.id}/apply`}
+            href={`/user/competitions/${data.id}/apply/?id=${data.id}`}
             full={true}
           />
         )}

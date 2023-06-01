@@ -1,21 +1,30 @@
 "use client";
 import ButtonComponent from "@/components/ButtonComponent";
 import InputComponent from "@/components/InputComponent";
+import { useRouter } from "next/navigation";
 import React, { FormEvent, useState } from "react";
 
-function Apply() {
- const user:any = sessionStorage.getItem("user");
+function Apply({
+  params,
+}: {
+  params: { competitionId: string };
+}) {
+  const user: any = sessionStorage.getItem("user");
+  const [userId, setUserId] = useState(JSON.parse(user).id);
   const [lastName, setLastName] = useState(JSON.parse(user).lastName);
   const [firstName, setFirstName] = useState(JSON.parse(user).firstName);
   const [date, setDate] = useState(JSON.parse(user).date);
 
-  const sexeOptions = [{
-    label :"Homme",value:0,
-  },
-  {
-    label :"Femme",value:1,
-  }
-]
+  const sexeOptions = [
+    {
+      label: "Homme",
+      value: 0,
+    },
+    {
+      label: "Femme",
+      value: 1,
+    },
+  ];
   const [sexe, setSexe] = useState(sexeOptions[JSON.parse(user).sexe].label);
   const [nina, setNina] = useState("");
   const [certificate, setCertificate] = useState("");
@@ -26,15 +35,43 @@ function Apply() {
   const [study, setStudy] = useState("");
   const [speciality, setSpeciality] = useState("");
 
-  const createApply =(e:FormEvent) =>{
-e.preventDefault()
-alert("l")
-  }
+  const createApply = async (e: FormEvent) => {
+    e.preventDefault();
+
+    const res = await fetch(`/api/user/candidature`, {
+      body: JSON.stringify({
+        sexe,
+        nina,
+        certificate,
+        diplome,
+        diplomeNumber,
+        placeOfGraduation,
+        countryOfGraduation,
+        study,
+        speciality,
+        uid:userId,
+        competitionId:params.competitionId,
+    
+      }),
+      headers: {
+        "Content-type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      method: "POST",
+    });
+    const data = await res.json();
+    console.log(data);
+  };
 
   return (
-    <form onSubmit={createApply} className="flex flex-col w-full h-full p-6 overflow-y-scroll bg-gray-100 rounded-lg shadow-xl md:max-w-7xl ">
+    <form
+      onSubmit={createApply}
+      className="flex flex-col w-full h-full p-6 overflow-y-scroll bg-gray-100 rounded-lg shadow-xl md:max-w-7xl "
+    >
+
       <h1 className="text-[24px] flex justify-between border-black  ">
-        <span> Informations a renseigné  </span>
+        <span> Informations a renseigné </span>
+        
       </h1>
 
       <div className="mt-2 mb-4 border-b border-solid  max-w-[320px]"></div>
