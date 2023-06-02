@@ -8,19 +8,11 @@ import bcrypt from "bcryptjs";
 export async function GET(req: NextRequest) {
   // const { searchParams } = new URL(req.url);
 
-  const datasPrisma = await prisma.candidature.findMany({
+  const datasPrisma = await prisma.user.findFirst({
   
   
-    orderBy: [
-      {
-        createdAt: "desc",
-      },
-      {
-        title: "desc",
-      },
-      
-    ],
-    include: { competition: {} },
+ 
+    include: { candidatures: {include:{ competition:{} }}, },
      
   });
   

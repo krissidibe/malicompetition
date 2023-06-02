@@ -5,7 +5,7 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 async function Candidatures() {
  
   const res = await fetch(`${process.env.BASE_URL}/api/user/candidature`,{next:{revalidate:0}})
-  const datas: any[] = await res.json();  
+  const data: any = await res.json();  
   return (
     <div className="flex flex-col" >
         <div className="flex items-center pb-2 mb-0 border-b-2 ">
@@ -21,7 +21,7 @@ async function Candidatures() {
  
  
   
-      <DataUserCandidatureComponent datas={datas}  />
+      <DataUserCandidatureComponent datas={data.candidatures}  />
     </div>
   )
 }
