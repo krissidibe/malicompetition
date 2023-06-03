@@ -1,21 +1,26 @@
 "use client";
-import React, { FormEvent,useState, useEffect ,useRef} from "react";
+import React, { FormEvent, useState, useEffect, useRef } from "react";
 import InputComponent from "../../../../components/InputComponent";
 import ButtonComponent from "../../../../components/ButtonComponent";
 import { useRouter } from "next/navigation";
-import { Button } from 'primereact/button';
-import { Toast } from 'primereact/toast';
+import { Button } from "primereact/button";
+import { Toast } from "primereact/toast";
 import ModalComponent from "@/components/ModalComponent";
-
+import { useSession } from "next-auth/react";
+import { Calendar } from "primereact/calendar";
 function Profile() {
   const router = useRouter();
-  const toast = useRef<Toast>(null);
-
+  const toast = useRef < Toast > null;
+  const { data: session, status } = useSession();
   const show = () => {
-    toast.current?.show({ severity: 'info', summary: 'Info', detail: 'Message Content' });
+    toast.current?.show({
+      severity: "info",
+      summary: "Info",
+      detail: "Message Content",
+    });
   };
-  const createUser = async (e: FormEvent) => {
-    e.preventDefault()
+  const createUser = async (e) => {
+    e.preventDefault();
     const res = await fetch(`/api/user`, {
       body: JSON.stringify({
         firstName,
@@ -23,6 +28,8 @@ function Profile() {
         email,
         number,
         sexe,
+        birthDate,
+numberNina
       }),
       headers: {
         "Content-type": "application/json",
@@ -32,35 +39,34 @@ function Profile() {
     });
     const data = await res.json();
     console.log(data);
-    
-   if(data.user){
-    setShowModal((x) => (x = true));
-    setMessage(data.message);
-    setFirstName(data.user.firstName);
-    setLastName(data.user.lastName);
-    setEmail(data.user.email);
-    setNumber(data.user.number);
-    setSexe(data.user.sexe);
-   }
+
+    if (data.user) {
+      setShowModal((x) => (x = true));
+      setMessage(data.message);
+      setFirstName(data.user.firstName);
+      setLastName(data.user.lastName);
+      setEmail(data.user.email);
+      setNumber(data.user.number);
+      setSexe(data.user.sexe);
+    }
   };
 
-
   // @ts-ignore
-
-
+  const [birthDate, setBirthDate] = useState(null);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [number, setNumber] = useState("");
   const [sexe, setSexe] = useState("");
- 
+
+  const [numberNina, setNumberNina] = useState("");
   const [message, setMessage] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const getUser = async (email: String) => {
+  const getUser = async () => {
     const res = await fetch(`/api/user`, {
       body: JSON.stringify({
-       email:email,
-        type:"user"
+        email: session?.user.email,
+        type: "user",
       }),
       headers: {
         "Content-type": "application/json",
@@ -69,24 +75,24 @@ function Profile() {
       method: "POST",
     });
     const data = await res.json();
-    console.log(data)
-    setFirstName(data.user.firstName ?? "" );
-    setLastName(data.user.lastName ?? "" );
-    setEmail(data.user.email ?? "" );
-    setNumber(data.user.number ?? "" );
-    setSexe(data.user.sexe ?? "" );
+    console.log(data);
+    setFirstName(data.user.firstName ?? "");
+    setLastName(data.user.lastName ?? "");
+    setEmail(data.user.email ?? "");
+    setNumber(data.user.number ?? "");
+    setSexe(data.user.sexe ?? "");
   };
 
   useEffect(() => {
     let user = {};
-   // getUser(user.email)
+    getUser();
 
     return () => {};
   }, []);
 
   return (
     <div className="inset-0 ">
-        {showModal && (
+      {showModal && (
         <ModalComponent
           rightButtonLabel="Retour"
           rightButtonAction={() => setShowModal((x) => (x = false))}
@@ -151,7 +157,19 @@ function Profile() {
               label="Prénom"
             />
             <div className="flex flex-col space-x-0 space-y-2 md:flex-row md:space-y-0 md:w-full md:space-x-4 ">
-              <InputComponent key={1} label="Date de naissance" />
+              <div className="flex flex-col w-full">
+                <p className="text-[14px] text-gray-500 font-semibold mb-2  overflow-ellipsis">
+                  Date naissance
+                </p>
+                <div className="flex w-full card justify-content-center">
+                  <Calendar
+                    value={birthDate}
+                    className="w-full"
+                    onChange={(e) => setBirthDate(e.value)}
+                  />
+                </div>
+              </div>
+
               <InputComponent
                 value={sexe}
                 handleChange={(e) => {

@@ -5,12 +5,34 @@ import { CustomerService } from "../Services/Candidature";
 import { EnvelopeIcon, LockClosedIcon } from "@heroicons/react/24/solid";
 import parse from "html-react-parser";
 import DataTable from "react-data-table-component";
+import { useRouter } from "next/navigation";
+
+ 
+
+const statutOptions = [
+  {
+    label: "En cours de validation",
+    value: 0,
+    color: "bg-yellow-500",
+  },
+  {
+    label: "Valider",
+    value: 1,
+    color: "bg-green-500"
+  },
+  {
+    label: "refuser",
+    value: 3,
+    color: "bg-red-500"
+  },
+];
 
 const columns = [
   {
     name: "Nom",
-    selector: (row) => row.competition.title,
+   selector: (row) => row.competition.title,
     format: (row) => row.competition.title.toUpperCase(),
+   
   },
   {
     name: "Date Fin",
@@ -28,6 +50,7 @@ const columns = [
     name: "Statut",
     selector: (row) => row.statut,
     sortable: true,
+    cell: row => (<div className={`p-1 text-white text-[12px] px-2 bg-red-400 rounded-md ${statutOptions[row.statut].color } `} >{ statutOptions[row.statut].label }</div>),
   },
 ];
 const mobileColumns = [
@@ -48,6 +71,7 @@ const mobileColumns = [
     name: "Statut",
     selector: (row) => row.statut,
     sortable: true,
+    cell: row => (<div className={`p-1 text-white text-[12px] px-2 bg-red-400 rounded-md ${statutOptions[row.statut].color } `} >{ statutOptions[row.statut].label }</div>),
   },
 ];
 
@@ -90,10 +114,13 @@ const data = [
 ];
 
 export default function DataUserCandidatureComponent({datas}) {
+
+  const router = useRouter()
   const [customers, setCustomers] = useState([]);
 
   const paginatorLeft = <div>k</div>;
   const paginatorRight = <div>k</div>;
+
 
   useEffect(() => {
     CustomerService.getCustomersMedium().then((data) => setCustomers(data));
@@ -117,6 +144,18 @@ export default function DataUserCandidatureComponent({datas}) {
           className="border-2 rounded"
           columns={columns}
           data={datas}
+          onRowClicked={  row => {
+          
+     /*        router.replace(`/user/candidatures/${row.id}`,{
+              query: { data: row },
+            }) */
+            router.push(`/user/candidatures/${row.id}?data=${JSON.stringify(row)}`,
+              {
+                query: { data: row },
+              }
+              
+             )
+          }}
         />
       </div>
       <div className="md:hidden">

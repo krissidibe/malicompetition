@@ -102,7 +102,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
 }
 
 export async function PATCH(req: NextRequest, res: NextResponse) {
-  const { email, firstName, lastName, number, sexe, password, type } =
+  const { email, firstName, lastName, number, sexe, password, type,birthDate,
+    numberNina } =
     await req.json();
   const data = await prisma.user.findFirst({
     where: {
@@ -125,7 +126,9 @@ export async function PATCH(req: NextRequest, res: NextResponse) {
       data: {
        firstName:firstName,
        lastName:lastName,
-       sexe:sexe
+       sexe:sexe,
+       birthDate: birthDate,
+       
       },
     })
   return new Response(

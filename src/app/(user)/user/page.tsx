@@ -37,7 +37,7 @@ async function Home() {
         <p>Liste des candicatures</p>
       </div>
        
-    {/*   <DataUserCandidatureComponent datas={data.candidatures}  /> */}
+     <DataUserCandidatureComponent datas={data.candidatures}  /> 
       
     </div>
   );

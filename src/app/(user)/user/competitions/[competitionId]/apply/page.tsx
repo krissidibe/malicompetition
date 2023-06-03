@@ -7,12 +7,13 @@ import { useModalInfoStore } from "@/store/useModalInfoStore";
 import { getServerSession } from "next-auth";
 import { useRouter } from "next/navigation";
 import React, { FormEvent, useCallback, useEffect, useState } from "react";
-
+import { useSession } from "next-auth/react"
 export default function page({
   params,
 }: {
   params: { competitionId: string };
 }) {
+  const { data: session, status } = useSession()
   const [lastName, setLastName] = useState("lastName");
   const [firstName, setFirstName] = useState("firstName");
   const [date, setDate] = useState("date");
@@ -55,7 +56,7 @@ export default function page({
         countryOfGraduation,
         study,
         speciality,
-        uid:"userId",
+        uid:session?.user.id,
         competitionId:params.competitionId,
     
       }),
@@ -86,8 +87,8 @@ export default function page({
     <ModalInfo title="Alert" body={modalData}  /> 
 
       <h1 className="text-[24px] flex justify-between border-black  ">
-        <span> Informations a renseigné   </span>
-        
+        <span> Informations a renseigné </span>
+       
       </h1>
 
       <div className="mt-2 mb-4 border-b border-solid  max-w-[320px]"></div>

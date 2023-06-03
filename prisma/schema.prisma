@@ -48,6 +48,7 @@ model User {
   lastName      String
   number        String
   birthDate     DateTime?     @db.Date
+  nina                String?
   sexe          String
   password      String
   role          UserRole      @default(USER)

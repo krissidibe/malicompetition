@@ -79,7 +79,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
   const data = await prisma.candidature.create({
     data: {
       title: "title",
-      statut: "new",
+      statut: "0",
       firstName: user?.firstName ?? "",
       lastName: user?.lastName ?? "",
       birthDate: new Date(Date.now()),
