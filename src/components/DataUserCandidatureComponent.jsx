@@ -3,22 +3,26 @@ import React, { useState, useEffect } from "react";
 
 import { CustomerService } from "../Services/Candidature";
 import { EnvelopeIcon, LockClosedIcon } from "@heroicons/react/24/solid";
-
+import parse from "html-react-parser";
 import DataTable from "react-data-table-component";
 
 const columns = [
   {
     name: "Nom",
     selector: (row) => row.competition.title,
+    format: (row) => row.competition.title.toUpperCase(),
   },
   {
     name: "Date Fin",
     selector: (row) => row.competition.endDateAt,
+    format: (row) => new Date(row.competition.endDateAt).toLocaleDateString("fr-FR"),
+    
     sortable: true,
   },
   {
     name: "Description",
-    selector: (row) => row.competition.id,
+    selector: (row) => row.competition.content,
+    format: (row) => parse(row.competition.content.substring(0,70)  || ""),
   },
   {
     name: "Statut",
@@ -30,10 +34,13 @@ const mobileColumns = [
   {
     name: "Nom",
     selector: (row) => row.competition.title,
+    format: (row) => row.competition.title.toUpperCase(),
   },
   {
     name: "Date Fin",
     selector: (row) => row.competition.endDateAt,
+    format: (row) => new Date(row.competition.endDateAt).toLocaleDateString("fr-FR"),
+    
     sortable: true,
   },
   

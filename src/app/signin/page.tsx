@@ -16,7 +16,8 @@ import { useState } from "react";
 import { error } from "console";
 import { useRouter } from "next/navigation";
 const inter = Inter({ subsets: ["latin"] });
- 
+import {useModalInfoStore} from '@/store/useModalInfoStore'
+import ModalInfo from "@/components/ModalInfo";
 export default function Signin() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -33,6 +34,11 @@ export default function Signin() {
   const [password, setPassword] = useState("");
   const [passwordVeirfy, setPasswordVerify] = useState("");
 
+
+
+
+  const modal = useModalInfoStore();
+  const [modalData, setModalData] = useState("");
   const router = useRouter();
   const createUser = async () => {
    
@@ -54,11 +60,16 @@ export default function Signin() {
     }) ;
     const data = await res.json();
     console.log(data);
+    if (data.message) {
+      modal.onOpen()
+       setModalData(data.message);
+     } 
     
   };
 
   return (
     <div className="flex flex-1 w-screen h-screen bg-black ">
+        <ModalInfo title="Alert" body={modalData}  /> 
       <div className="flex flex-col items-center justify-between w-full h-full p-10 overflow-y-scroll md:w-1/2 bg-gray-50">
         <div className="md:min-w-[450px] w-[353px] items-center flex space-x-2">
           <Image

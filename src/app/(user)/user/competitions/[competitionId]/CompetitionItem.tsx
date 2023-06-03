@@ -54,7 +54,7 @@ export default async function CompetitionItem({
       </div>
       <p className="text-[14px] text-gray-500">{parse(data?.content || "")}</p>
       <div className="flex items-end justify-end w-full my-4">
-        {new Date(data.endDateAt) && (
+       {/*  {new Date(data.endDateAt) && (
           <ButtonComponent
             key={4}
             label="Postuler"
@@ -62,7 +62,7 @@ export default async function CompetitionItem({
             href={`/user/competitions/${data.id}/apply/?id=${data.id}`}
             full={true}
           />
-        )}
+        )} */}
         
       </div>
  

@@ -1,5 +1,4 @@
-"use client"
-import React,{ useRef,useState ,useEffect}  from "react";
+import { getServerSession } from "next-auth";
 import CardMiniComponent from "../../../components/CardMiniComponent";
 import DataUserCandidatureComponent from "../../../components/DataUserCandidatureComponent";
 import {
@@ -9,13 +8,17 @@ import {
   AcademicCapIcon,
   ArrowLeftIcon,
 } from "@heroicons/react/24/solid";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
-function Profile() {
-
+async function Home() {
+  const session = await getServerSession(authOptions)
+  const res = await fetch(`${process.env.BASE_URL}/api/user/candidature?id=${session?.user.email}`,{next:{revalidate:0}})
+  const data: any = await res.json();  
  
   return (
     <div className="flex flex-col">
       <div className="flex pb-10 space-x-4 ">
+ 
         <CardMiniComponent
           key={1}
           number={"21"}
@@ -34,12 +37,11 @@ function Profile() {
         <p>Liste des candicatures</p>
       </div>
        
-      <DataUserCandidatureComponent   />
+    {/*   <DataUserCandidatureComponent datas={data.candidatures}  /> */}
       
     </div>
   );
 }
 
-export default Profile;
-
-Profile.layout = "User";
+export default Home;
+ 

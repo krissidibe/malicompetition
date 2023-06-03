@@ -70,16 +70,16 @@ function Profile() {
     });
     const data = await res.json();
     console.log(data)
-    setFirstName(data.user.firstName);
-    setLastName(data.user.lastName);
-    setEmail(data.user.email);
-    setNumber(data.user.number);
-    setSexe(data.user.sexe);
+    setFirstName(data.user.firstName ?? "" );
+    setLastName(data.user.lastName ?? "" );
+    setEmail(data.user.email ?? "" );
+    setNumber(data.user.number ?? "" );
+    setSexe(data.user.sexe ?? "" );
   };
 
   useEffect(() => {
-    let user = JSON.parse(window.sessionStorage.getItem("user") || "" );
-    getUser(user.email)
+    let user = {};
+   // getUser(user.email)
 
     return () => {};
   }, []);

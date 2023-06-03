@@ -2,6 +2,19 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "../../../../utils/prisma";
 import bcrypt from "bcryptjs";
 
+export async function GET(req: NextRequest, res: NextResponse) {
+
+  const { searchParams } = new URL(req.url);
+
+
+  const data = await prisma.competition.findFirst({
+    where: {
+      id: searchParams.get("id")?.toString(),
+    }}); 
+  return new Response(
+    JSON.stringify({ data: data, message: "complet" })
+  );
+}
 export async function POST(req: NextRequest, res: NextResponse) {
 
   /* const {

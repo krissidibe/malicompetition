@@ -1,94 +1,89 @@
+import { getServerSession } from "next-auth";
+
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "../../../../utils/prisma";
 import bcrypt from "bcryptjs";
 
-
-
-
 export async function GET(req: NextRequest) {
-  // const { searchParams } = new URL(req.url);
-
-  const datasPrisma = await prisma.user.findFirst({
-  
-  
+  const { searchParams } = new URL(req.url);
  
-    include: { candidatures: {include:{ competition:{} }}, },
-     
-  });
+ 
+    const data = await prisma.user.findUnique({
+      where: {
+        email: searchParams.get("id")?.toString(),
+      },
+
+      include: { candidatures: { include: { competition: {} } } },
+    });
+
+    if(!data){
+
+      return new Response(JSON.stringify({data: data, message : "Aucun utilisateur trouvé"}));
+    }
+   else return new Response(JSON.stringify(data));
   
-  //  console.log(searchParams.get("name"));
-  return new Response(JSON.stringify(datasPrisma));
 }
 
-
-
-
-
 export async function POST(req: NextRequest, res: NextResponse) {
-   
-
- 
   const {
-          sexe,
-        nina,
-        certificate,
-        diplome,
-        diplomeNumber,
-        placeOfGraduation,
-        countryOfGraduation,
-        study,
-        speciality,
-        uid,
-        competitionId,
+    sexe,
+    nina,
+    certificate,
+    diplome,
+    diplomeNumber,
+    placeOfGraduation,
+    countryOfGraduation,
+    study,
+    speciality,
+    uid,
+    competitionId,
+    
   } = await req.json();
 
 
 
-
   const competition = await prisma.competition.findFirst({
-    where:{
- id:competitionId
-    }
+    where: {
+      id: competitionId,
+    },
   });
 
-if(!competition){
-  return new Response(
-    JSON.stringify({ data:  "", message: "Competition non trouvé" })
-  );
-}
-
-
-const candidatureCheck = await prisma.candidature.findFirst({
-  where:{
-authorId:uid,
-competitionId: competitionId
+  if (!competition) {
+    return new Response(
+      JSON.stringify({ data: "", message: "Competition non trouvé" })
+    );
   }
-});
 
+  const candidatureCheck = await prisma.candidature.findFirst({
+    where: {
+      authorId: uid,
+      competitionId: competitionId,
+    },
+  });
 
-if(candidatureCheck){
-  return new Response(
-    JSON.stringify({ data:  candidatureCheck.id, message: "Vous avez déja postuler" })
-  );
-} 
-
+  if (candidatureCheck) {
+    return new Response(
+      JSON.stringify({
+        data: candidatureCheck.id,
+        message: "Vous avez déja postuler",
+      })
+    );
+  }
 
   const user = await prisma.user.findFirst({
-    where:{
- id:uid
-    }
+    where: {
+      id: uid,
+    },
   });
 
- 
- 
   const data = await prisma.candidature.create({
     data: {
       title: "title",
       statut: "new",
       firstName: user?.firstName ?? "",
-      lastName:  user?.lastName ?? "",
+      lastName: user?.lastName ?? "",
       birthDate: new Date(Date.now()),
-      sexe:  user?.sexe ?? "",
+      sexe: user?.sexe ?? "",
       nina: "nina",
       certificat: "certificat",
       diplome: "diplome",

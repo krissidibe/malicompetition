@@ -2,25 +2,57 @@
 import Image from "next/image";
 import { Inter } from "next/font/google";
 import InputComponent from "../components/InputComponent";
-import ButtonComponent from "../components/ButtonComponent";
-import ModalComponent from "../components/ModalComponent";
+import ButtonComponent from "../components/ButtonComponent"; 
 import { EnvelopeIcon, LockClosedIcon } from "@heroicons/react/24/solid";
-import { signIn } from "next-auth/react";
-import { GetServerSideProps, NextPage } from "next";
+import { toast } from "react-hot-toast";
+import { signIn, useSession } from "next-auth/react"; 
 import { FormEvent, useEffect, useState } from "react";
-import axios from "axios";
-const inter = Inter({ subsets: ["latin"] });
+import { useModalInfoStore } from "@/store/useModalInfoStore";
+import ModalInfo from "@/components/ModalInfo";
+ 
 import { useRouter } from "next/navigation";
 const Home = () => {
   const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
-  const [showModal, setShowModal] = useState(false);
 
   const router = useRouter();
   const [password, setPassword] = useState("");
+  const modal = useModalInfoStore();
+  const [modalData, setModalData] = useState("");
+  const session = useSession();
+  const [data, setData] = useState({
+    email: '',
+    password: ''
+    })
 
+  useEffect(() => {
+    if (session?.status === "authenticated") {
+      router.push("/user");
+    }
+  });
+
+
+
+  const login2User = async (e: FormEvent) => {
+    e.preventDefault()
+    signIn('credentials',
+     {...data, redirect: false
+    })
+    .then((callback) => {
+        if (callback?.error) {
+            toast.error(callback.error)
+        }
+
+        if(callback?.ok && !callback?.error) {
+            toast.success('Logged in successfully!')
+        }
+    } )
+}
+  
   const loginUser = async (e: FormEvent) => {
     e.preventDefault();
+   
+     
+ 
 
     /*     const form = new FormData(e.target as HTMLFormElement);
 
@@ -37,7 +69,11 @@ const Home = () => {
       body: JSON.stringify({
         email,
         password,
-         firstName:"firstName", lastName:"lastName", number:"number", sexe:"sexe", type:"type"
+        firstName: "firstName",
+        lastName: "lastName",
+        number: "number",
+        sexe: "sexe",
+        type: "type",
       }),
       method: "POST",
       headers: {
@@ -49,27 +85,31 @@ const Home = () => {
     const data = await res.json();
 
     if (!data.user) {
-      setShowModal((x) => (x = true));
-      setMessage(data.message);
+      modal.onOpen();
+      setModalData(data.message);
     } else {
       e.preventDefault();
+
+      signIn("credentials", { ...data, redirect: false }).then((callback) => {
+        if (callback?.error) {
+          toast.error(callback.error);
+        }
+
+        if (callback?.ok && !callback?.error) {
+          toast.success("Logged in successfully!");
+        }
+      });
+
       console.log(data.user);
-      sessionStorage.setItem("user", JSON.stringify(data.user));
-      router.push("/user");
+      // sessionStorage.setItem("user", JSON.stringify(data.user));
+      // router.push("/user");
 
       return;
     }
   };
   return (
     <div className="flex flex-1 w-screen h-screen bg-black ">
-      {showModal && (
-        <ModalComponent
-          rightButtonLabel="Retour"
-          rightButtonAction={() => setShowModal((x) => (x = false))}
-          content={message}
-          title={"Message"}
-        />
-      )}
+      <ModalInfo title="Alert" body={modalData} />
       <div className="flex flex-col items-center justify-between w-full h-full p-10 md:w-1/2 overscroll-y-auto bg-gray-50">
         <div className="md:min-w-[450px] w-[353px] items-center flex space-x-2">
           <Image
@@ -82,19 +122,19 @@ const Home = () => {
           <p>Projet Name</p>
         </div>
         <form
-          onSubmit={loginUser}
+          onSubmit={login2User}
           className="md:min-w-[380px] max-w-[353px]  justify-center space-y-5 "
         >
           <p className="text-[24px]">Connectez-vous à votre compte</p>
           <InputComponent
             key={1}
             label="Email"
+            inputType="email"
             Icon={EnvelopeIcon}
             withIcon={true}
-            value={email}
-            handleChange={(e) => {
-              setEmail(e.target.value);
-            }}
+            
+            value={data.email}
+            handleChange={e => setData({ ...data, email: e.target.value })}
           />
           <InputComponent
             key={2}
@@ -102,11 +142,9 @@ const Home = () => {
             obscureInput={true}
             Icon={LockClosedIcon}
             withIcon={true}
-            value={password}
+            value={data.password}
             inputType="password"
-            handleChange={(e) => {
-              setPassword(e.target.value);
-            }}
+            handleChange={(e) => setData({...data,password:e.target.value})}
           />
           <div className="flex w-full space-x-4 ">
             <ButtonComponent key={3} label="S'inscrire" href={"/signin"} />

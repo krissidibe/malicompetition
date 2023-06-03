@@ -8,11 +8,14 @@ import { getServerSession } from "next-auth";
 import { useRouter } from "next/navigation";
 import React, { FormEvent, useCallback, useEffect, useState } from "react";
 
-export default function page({
+async function Apply({
   params,
 }: {
   params: { competitionId: string };
 }) {
+
+ // const session = await getServerSession(authOptions)
+  const [userId, setUserId] = useState("");
   const [lastName, setLastName] = useState("lastName");
   const [firstName, setFirstName] = useState("firstName");
   const [date, setDate] = useState("date");
@@ -39,7 +42,8 @@ export default function page({
   
   const modal = useModalInfoStore();
   const [modalData, setModalData] = useState("");
-
+ 
+  
   const createApply = async (e: FormEvent) => {
    
     e.preventDefault();
@@ -55,7 +59,7 @@ export default function page({
         countryOfGraduation,
         study,
         speciality,
-        uid:"userId",
+        uid:userId,
         competitionId:params.competitionId,
     
       }),
@@ -77,9 +81,8 @@ export default function page({
     
   };
  
-   
-    return (
-      <form
+  return (
+    <form
       onSubmit={createApply}
       className="flex flex-col w-full h-full p-6 overflow-y-scroll bg-gray-100 rounded-lg shadow-xl md:max-w-7xl "
     >    
@@ -217,5 +220,7 @@ export default function page({
         />
       </div>
     </form>
-    )
+  );
 }
+
+export default Apply;
