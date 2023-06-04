@@ -7,7 +7,7 @@ import {   convertFromRaw,convertToRaw } from "draft-js";
 import parse from 'html-react-parser'; 
 import { useRouter } from "next/navigation";
  
-function CandidatureCardComponent({imageUrl,href,data}) {
+function CandidatureCardComponent({imageUrl, data}) {
  //console.log(JSON.parse(data.content).blocks);
 const router = useRouter();
  const statutData = [
