@@ -113,15 +113,7 @@ function CompetitionItem({ params, data }) {
 
   return (
     <div className="flex flex-col w-full h-full">
-      <div className="flex items-center pb-2 mb-8 border-b-2 ">
-        <div className="flex-1">Liste des candidature par concours</div>{" "}
-        <div className="flex px-4 bg-gray-100 rounded-md md:w-[310px]">
-          <input
-            className="w-full p-1 px-3   h-[45px] bg-gray-100  outline-none"
-            placeholder="Rechercher"
-          />
-        </div>
-      </div>
+
 
       <div className="flex-1 w-full h-full bg-slate">
 

@@ -21,7 +21,7 @@ const router = useRouter();
   return (
     <div  onClick={()=>{
       router.push(`/admin/candidatures/${data.id}`,{datas:data})
-    }}   passHref legacyBehavior className="flex flex-col cursor-pointer rounded-lg   h-[568px] shadow-md mr-4 mt-4 ">
+    }}   passHref legacyBehavior className="flex flex-col cursor-pointer rounded-lg   h-[558px] shadow-md mr-4 mt-4 ">
       <div className="w-full rounded-t-lg h-1/2 bg-slate-600 ">
         
      <picture>
@@ -38,10 +38,12 @@ const router = useRouter();
       </div>
       <span className="self-end text-[13px] px-4 text-gray-500 font-semibold border-t-2 pl-10  mr-0"><span className="font-normal" >Date de fin</span> :  {new Date(data.endDateAt).toLocaleDateString("fr-FR")}</span>
     
-    <div className=" px-4 py-2 my-2 bg-slate-100 border-[1px] border-black text-[13px] ml-4 mr-4">
-    <div className="flex justify-between border-b-[1px] border-black rounded-sm" >  <p className="">Nombre de candidature total</p> <p>750</p> </div>
-    <div className="flex justify-between border-b-[1px] border-black rounded-sm" >  <p className="">Nombre de candidature validée</p> <p className="text-green-500">650</p> </div>
-    <div className="flex justify-between rounded-sm " >  <p className="">Nombre de candidature en cours</p> <p className="text-orange-500">150</p> </div>
+    <div className=" px-4 py-2 my-2 bg-slate-100 border-[1px] rounded-md border-black text-[13px] ml-4 mr-4">
+    <div className="flex justify-between px-2 py-4 rounded-sm" >  
+    
+    <p className="font-bold">Nombre de candidature total</p> <p className="font-semibold">{data.candidatures.length}</p> </div>
+   {/*  <div className="flex justify-between border-b-[1px] border-black rounded-sm" >  <p className="">Nombre de candidature validée</p> <p className="text-green-500">650</p> </div>
+    <div className="flex justify-between rounded-sm " >  <p className="">Nombre de candidature en cours</p> <p className="text-orange-500">150</p> </div> */}
     </div>
     
       <span className="self-start text-[12px] px-4 py-1 text-blue-500 flex items-center mb-4">Voir plus  <ArrowRightCircleIcon className="w-6 ml-2"/> </span>

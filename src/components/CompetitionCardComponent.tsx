@@ -7,7 +7,7 @@ import {   convertFromRaw,convertToRaw } from "draft-js";
 import parse from 'html-react-parser'; 
 import { useRouter } from "next/navigation";
  
-function CompetitionCardComponent({imageUrl,href,data}) {
+function CompetitionCardComponent({imageUrl,href,data}:any) {
  //console.log(JSON.parse(data.content).blocks);
 const router = useRouter();
  const statutData = [
@@ -20,8 +20,8 @@ const router = useRouter();
 
   return (
     <div  onClick={()=>{
-      router.push(`/admin/competitions/${data.id}`,{datas:data})
-    }}   passHref legacyBehavior className="flex flex-col cursor-pointer rounded-lg   h-[360px] shadow-md mr-4 mt-4 ">
+      router.push(`/admin/competitions/${data.id}`)
+    }}       className="flex flex-col cursor-pointer rounded-lg   h-[360px] shadow-md mr-4 mt-4 ">
       <div className="w-full rounded-t-lg h-1/2 bg-slate-600 ">
         
      <picture>

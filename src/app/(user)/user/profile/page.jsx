@@ -45,11 +45,11 @@ const imageRef = useRef(null)
 
  const datas = Object.fromEntries(formData);
     const res = await fetch(`/api/user`, {
-      body: JSON.stringify(datas),
+     // body: JSON.stringify(datas),
       headers: {
         "Content-type": "multipart/form-data", 
       },
-/*       body: JSON.stringify({
+      body: JSON.stringify({
         firstName,
         lastName,
         email,
@@ -58,7 +58,7 @@ const imageRef = useRef(null)
         birthDate,
         numberNina,
         image:image
-      }), */
+      }),
       
       method: "PATCH",
     });
@@ -80,7 +80,7 @@ const imageRef = useRef(null)
   };
 
   // @ts-ignore
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState("");
   const [birthDate, setBirthDate] = useState(null);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -155,7 +155,8 @@ const imageRef = useRef(null)
            imageRef.current.click()
           }} className="self-center w-32 h-32 my-4 bg-white rounded-full shadow-md md:self-start">
             <img
-             // src={image.length != 0 ? URL.createObjectURL(image)  : "https://picsum.photos/300/200?random=10" }
+            //image.length != null ? URL.createObjectURL(image)  : 
+             src={"https://picsum.photos/300/200?random=10" }
               alt="image"
               className="object-cover w-full h-full rounded-lg rounded-t-lg white"
             />

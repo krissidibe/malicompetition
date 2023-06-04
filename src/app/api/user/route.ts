@@ -102,31 +102,31 @@ export async function POST(req: NextRequest, res: NextResponse) {
   }
 }
 
+const storage = multer.diskStorage({
+  destination: "uploads/",
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+    cb(null, uniqueSuffix)
+  }
+})
+
+
 export async function PATCH(req: NextRequest, res: NextResponse) {
 
-  return new Response(
-    JSON.stringify({
-      user: "dataUpdate",
-      message: `Votre`,
-    })
-  );
-    
-    const storage = multer.diskStorage({
-      destination: function (req, file, cb) {
-        cb(null, '/uploads')
-      },
-      filename: function (req, file, cb) {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-        cb(null, uniqueSuffix)
-      }
-    })
   
-      
-    const formData = await req.formData() ;
- 
- 
- //   const test = await   multer({storage}).single()
     
+/*   const formData =  req.formData() ;
+   
+ const dd =  multer({storage}).single("image")
+    return new Response(
+      JSON.stringify({
+        user: "dataUpdate",
+        message: `Votre `,
+      })
+    );
+ 
+ //   
+     */
  
 
     const { email, firstName, lastName, number, sexe, password, type,birthDate,

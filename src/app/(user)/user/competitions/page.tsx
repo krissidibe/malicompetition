@@ -18,8 +18,8 @@ async function Competitions() {
  
       <div className="grid items-center w-full sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5 md:flex-row">
        {datas.map((data) => (
-      <Link  key={data.id} href={`/user/competitions/${data.id}`}>
-           {/*  @ts-ignore */}
+         <Link  key={data.id} href={`/user/competitions/${data.id}`}>
+        {/*  @ts-ignore */}
         <CompetitionCardComponent
           key={data.id}
           data={data}
