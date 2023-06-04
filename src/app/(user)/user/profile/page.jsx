@@ -1,15 +1,33 @@
 "use client";
-import React, { FormEvent, useState, useEffect, useRef } from "react";
+import fs from "fs";
+import React, { FormEvent, useState,useRef, useEffect } from "react";
 import InputComponent from "../../../../components/InputComponent";
+import InputSelectComponent from "../../../../components/InputSelectComponent";
 import ButtonComponent from "../../../../components/ButtonComponent";
 import { useRouter } from "next/navigation";
 import { Button } from "primereact/button";
 import { Toast } from "primereact/toast";
+import multer from "multer";
+import { v4 as uuidv4 } from "uuid";
+
+import {
+   
+  InformationCircleIcon,
+} from "@heroicons/react/24/solid";
 import ModalComponent from "@/components/ModalComponent";
 import { useSession } from "next-auth/react";
 import { Calendar } from "primereact/calendar";
 function Profile() {
   const router = useRouter();
+  const sexeOptions = [{
+    label :"Homme",value:0,
+  },
+  {
+    label :"Femme",value:1,
+  }
+]
+
+const imageRef = useRef(null)
   const toast = useRef < Toast > null;
   const { data: session, status } = useSession();
   const show = () => {
@@ -21,37 +39,48 @@ function Profile() {
   };
   const createUser = async (e) => {
     e.preventDefault();
+ const formData = new FormData()
+ formData.append("image",image)
+ formData.append("name","name")
+
+ const datas = Object.fromEntries(formData);
     const res = await fetch(`/api/user`, {
-      body: JSON.stringify({
+      body: JSON.stringify(datas),
+      headers: {
+        "Content-type": "multipart/form-data", 
+      },
+/*       body: JSON.stringify({
         firstName,
         lastName,
         email,
         number,
         sexe,
         birthDate,
-numberNina
-      }),
-      headers: {
-        "Content-type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
+        numberNina,
+        image:image
+      }), */
+      
       method: "PATCH",
     });
     const data = await res.json();
     console.log(data);
 
     if (data.user) {
+     
       setShowModal((x) => (x = true));
       setMessage(data.message);
       setFirstName(data.user.firstName);
       setLastName(data.user.lastName);
       setEmail(data.user.email);
       setNumber(data.user.number);
+      setNumberNina(data.user.nina);
+      setBirthDate(new Date(data.user.birthDate));
       setSexe(data.user.sexe);
     }
   };
 
   // @ts-ignore
+  const [image, setImage] = useState(null);
   const [birthDate, setBirthDate] = useState(null);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -69,7 +98,7 @@ numberNina
         type: "user",
       }),
       headers: {
-        "Content-type": "application/json",
+        "Content-type": "multipart/form-data",
         "Access-Control-Allow-Origin": "*",
       },
       method: "POST",
@@ -80,6 +109,9 @@ numberNina
     setLastName(data.user.lastName ?? "");
     setEmail(data.user.email ?? "");
     setNumber(data.user.number ?? "");
+    setNumberNina(data.user.nina ?? ""); 
+    setBirthDate(new Date(data.user.birthDate));
+ 
     setSexe(data.user.sexe ?? "");
   };
 
@@ -101,7 +133,9 @@ numberNina
         />
       )}
       <form
+      encType="multipart/form-data"
         onSubmit={createUser}
+        method="post"
         className="flex flex-col w-full h-full p-6 overflow-y-scroll bg-gray-100 rounded-lg shadow-sm "
       >
         <h1 className="text-[24px] flex justify-between border-black  ">
@@ -116,22 +150,33 @@ numberNina
           dignissim tortor, eu elementum arcu dictum non
         </p>
 
-        <div className="flex flex-col md:flex-row md:items-center md:space-x-8">
-          <picture className="self-center w-32 h-32 my-4 bg-white rounded-full shadow-md md:self-start">
+        <div className="flex flex-col cursor-pointer md:flex-row md:items-center md:space-x-8 ">
+          <picture onClick={()=>{
+           imageRef.current.click()
+          }} className="self-center w-32 h-32 my-4 bg-white rounded-full shadow-md md:self-start">
             <img
-              src={"https://picsum.photos/300/200?random=10"}
+             // src={image.length != 0 ? URL.createObjectURL(image)  : "https://picsum.photos/300/200?random=10" }
               alt="image"
               className="object-cover w-full h-full rounded-lg rounded-t-lg white"
             />
           </picture>
+         
           <div className="flex flex-col space-y-2 md:maw-w-[200px] mb-2">
-            <ButtonComponent
-              key={4}
-              label="Changer la photo"
-              className="w-[130px] py-2 my-2 md:my-0   "
-              // handleClick={() => setVisible((x) => (x = !x))}
-              full={false}
-            />
+ 
+
+           <input
+           
+           className="block w-full p-2 text-sm text-white border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+           type="file" ref={imageRef} 
+           
+           
+           onChange={(e)=>{
+
+            if(!e.target.files[0].type.startsWith("image/")) return;
+            setImage(e.target.files[0])
+           }} />
+
+      
             <p className="text-[12px] pt-2 text-gray-500">
               {"Max 1mo format (jpg,png)"}
             </p>
@@ -170,18 +215,26 @@ numberNina
                 </div>
               </div>
 
-              <InputComponent
-                value={sexe}
-                handleChange={(e) => {
-                  setSexe(e.target.value);
-                }}
-                key={1}
-                label="Sexe"
-              />
+              <InputSelectComponent
+            options={sexeOptions}
+              value={sexe}
+              handleChange={(e) => {
+                setSexe(e.target.value);
+              }}
+              Icon={InformationCircleIcon}
+              withIcon={true}
+              key={5}
+              label="Sexe"
+              className="w-2/3"
+            />
+            
             </div>
           </div>
           <div className="flex flex-col w-full space-y-4 md:space-y-4 md:w-1/2">
-            <InputComponent key={1} label="Numéro nina" />
+            <InputComponent key={1} label="Numéro nina"  value={numberNina}
+                handleChange={(e) => {
+                  setNumberNina(e.target.value);
+                }} />
             <InputComponent key={1} label="Certificat de nationalité" />
 
             <div className="flex flex-col space-x-0 space-y-2 md:flex-row md:space-y-0 md:w-full md:space-x-2 ">

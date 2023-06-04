@@ -26,8 +26,11 @@
     "draft-convert": "^2.1.13",
     "draft-js": "^0.11.7",
     "firebase": "^9.22.0",
+    "formidable": "^2.1.1",
+    "fs": "^0.0.1-security",
     "heroicons": "^2.0.18",
     "html-react-parser": "^3.0.16",
+    "multer": "^1.4.5-lts.1",
     "next": "^13.4.5-canary.4",
     "next-auth": "^4.22.1",
     "postcss": "8.4.23",
@@ -43,12 +46,15 @@
     "tailwind-scrollbar-hide": "^1.1.7",
     "tailwindcss": "3.3.2",
     "typescript": "5.0.4",
+    "uuid": "^9.0.0",
     "zustand": "^4.3.8"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
     "@types/draft-convert": "^2.1.4",
     "@types/draft-js": "^0.11.10",
+    "@types/formidable": "^2.0.6",
+    "@types/multer": "^1.4.7",
     "@types/react-draft-wysiwyg": "^1.13.4",
     "next-router-mock": "^0.9.3",
     "prisma": "^4.14.1"

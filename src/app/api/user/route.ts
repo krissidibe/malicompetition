@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "../../../utils/prisma";
 import bcrypt from "bcryptjs";
+import multer from "multer";
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   console.log("GET REQUEST");
@@ -9,7 +10,7 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest, res: NextResponse) {
-  const { email, firstName, lastName, number, sexe, password, type } =
+  const { email, firstName, lastName, number, sexe, password, type,image } =
     await req.json();
   //
 
@@ -102,9 +103,34 @@ export async function POST(req: NextRequest, res: NextResponse) {
 }
 
 export async function PATCH(req: NextRequest, res: NextResponse) {
-  const { email, firstName, lastName, number, sexe, password, type,birthDate,
-    numberNina } =
-    await req.json();
+
+
+    
+    const storage = multer.diskStorage({
+      destination: function (req, file, cb) {
+        cb(null, '/uploads')
+      },
+      filename: function (req, file, cb) {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+        cb(null, uniqueSuffix)
+      }
+    })
+      const storageZ =   multer.memoryStorage()
+    const formData = await req.formData() ;
+ 
+   const test = await   multer() 
+ //   const test = await   multer({storage}).single()
+    
+    return new Response(
+      JSON.stringify({
+        user: "dataUpdate",
+        message: `Votre ${test}`,
+      })
+    );
+
+    const { email, firstName, lastName, number, sexe, password, type,birthDate,
+      numberNina,image } =
+      await req.json();
   const data = await prisma.user.findFirst({
     where: {
       AND: [{ email: email }, { role: "USER" }],
@@ -119,6 +145,15 @@ export async function PATCH(req: NextRequest, res: NextResponse) {
       })
     );
 
+
+/*     return new Response(
+      JSON.stringify({
+        user: {},
+        message: `Votre profile est  ${numberNina}`,
+      })
+    ); */
+
+ 
     const dataUpdate = await prisma.user.update({
       where: {
         email: email,
@@ -128,13 +163,14 @@ export async function PATCH(req: NextRequest, res: NextResponse) {
        lastName:lastName,
        sexe:sexe,
        birthDate: birthDate,
-       
+       nina : numberNina
+ 
       },
     })
   return new Response(
     JSON.stringify({
       user: dataUpdate,
-      message: "Votre profile est modifier",
+      message: `Votre profile est modifier`,
     })
   );
 }

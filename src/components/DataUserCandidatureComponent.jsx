@@ -129,7 +129,7 @@ export default function DataUserCandidatureComponent({datas}) {
   /*   <div className="hidden md:block" >   <DataUserCandidatureComponent isMobileScreen={false} /></div>
   <div className="md:hidden" >   <DataUserCandidatureComponent isMobileScreen={true} /></div> */
   return (
-    <>
+    <div>
       <div className="hidden md:block">
         {" "}
         <DataTable
@@ -143,13 +143,25 @@ export default function DataUserCandidatureComponent({datas}) {
           highlightOnHover
           className="border-2 rounded"
           columns={columns}
-          data={datas}
+          data={datas.candidatures}
           onRowClicked={  row => {
-          
+            
+            const user = {
+              firstName:datas.firstName,
+              lastName:datas.lastName,
+              birthDate:datas.birthDate,
+              sexe:datas.sexe,
+              email:datas.email,
+              number:datas.number,
+              nina:datas.nina,
+             
+            }
+        //    alert(JSON.stringify(user));
+        //  return
      /*        router.replace(`/user/candidatures/${row.id}`,{
               query: { data: row },
             }) */
-            router.push(`/user/candidatures/${row.id}?data=${JSON.stringify(row)}`,
+            router.push(`/user/candidatures/${row.id}?data=${JSON.stringify(row)}&user=${JSON.stringify(user)}`,
               {
                 query: { data: row },
               }
@@ -171,9 +183,9 @@ export default function DataUserCandidatureComponent({datas}) {
           highlightOnHover
           className="border-2 rounded"
           columns={mobileColumns}
-          data={datas}
+          data={datas.candidatures}
         />
       </div>
-    </>
+    </div>
   );
 }

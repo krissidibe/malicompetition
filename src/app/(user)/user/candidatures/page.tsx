@@ -24,7 +24,7 @@ async function Candidatures() {
  
  
   
-   <DataUserCandidatureComponent datas={data.candidatures}  /> 
+   <DataUserCandidatureComponent datas={data}  /> 
     </div>
   )
 }

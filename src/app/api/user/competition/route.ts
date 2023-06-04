@@ -3,20 +3,40 @@ import { prisma } from "../../../../utils/prisma";
 import bcrypt from "bcryptjs";
 
 export async function GET(req: NextRequest, res: NextResponse) {
-
   const { searchParams } = new URL(req.url);
+
+console.log(searchParams.get("id"));
+
+  if (searchParams.get("id") == null) {
+    const datasPrisma = await prisma.competition.findMany({
+      where: {
+        statut: {
+          in: ["1", "2"],
+        },
+      },
+      orderBy: [
+        {
+          createdAt: "desc",
+        },
+        {
+          title: "desc",
+        },
+      ],
+    });
+
+    //  console.log(searchParams.get("name"));
+    return new Response(JSON.stringify(datasPrisma));
+  }
 
 
   const data = await prisma.competition.findFirst({
     where: {
       id: searchParams.get("id")?.toString(),
-    }}); 
-  return new Response(
-    JSON.stringify({ data: data, message: "complet" })
-  );
+    },
+  });
+  return new Response(JSON.stringify({ data: data, message: "complet" }));
 }
 export async function POST(req: NextRequest, res: NextResponse) {
-
   /* const {
     title,
     statut,

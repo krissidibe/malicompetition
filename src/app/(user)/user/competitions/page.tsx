@@ -8,7 +8,7 @@ import SearchComponent from "./SearchComponent";
 
 async function Competitions() {
  // const [search, setSearch] = useState("")
- const res = await fetch(`${process.env.BASE_URL}/api/admin/competition`,{next:{revalidate:0}})
+ const res = await fetch(`${process.env.BASE_URL}/api/user/competition`,{next:{revalidate:0}})
  const datas: any[] = await res.json();
   return (
     <div className="flex flex-col">
