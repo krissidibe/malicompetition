@@ -104,7 +104,12 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
 export async function PATCH(req: NextRequest, res: NextResponse) {
 
-
+  return new Response(
+    JSON.stringify({
+      user: "dataUpdate",
+      message: `Votre`,
+    })
+  );
     
     const storage = multer.diskStorage({
       destination: function (req, file, cb) {
@@ -115,18 +120,14 @@ export async function PATCH(req: NextRequest, res: NextResponse) {
         cb(null, uniqueSuffix)
       }
     })
-      const storageZ =   multer.memoryStorage()
+  
+      
     const formData = await req.formData() ;
  
-   const test = await   multer() 
+ 
  //   const test = await   multer({storage}).single()
     
-    return new Response(
-      JSON.stringify({
-        user: "dataUpdate",
-        message: `Votre ${test}`,
-      })
-    );
+ 
 
     const { email, firstName, lastName, number, sexe, password, type,birthDate,
       numberNina,image } =
