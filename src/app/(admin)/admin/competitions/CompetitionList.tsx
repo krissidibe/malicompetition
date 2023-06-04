@@ -1,7 +1,7 @@
 import { FunctionComponent } from "react";
 import { Board } from "../../../../../typings";
  import {prisma} from '../../../../utils/prisma'
-import CompetitionCardComponent from "@/components/CompetitionCardComponent";
+import CompetitionCardAdminComponent from "@/components/CompetitionCardAdminComponent";
 import Link from "next/link";
  
 export const revalidate = 0;
@@ -19,7 +19,7 @@ const CompetitionList = async () => {
        {datas.map((data) => (
       <div  key={data.id} >
 {/*            @ts-ignore   */}
-        <CompetitionCardComponent
+        <CompetitionCardAdminComponent
           key={data.id}
           data={data}
           imageUrl={`https://picsum.photos/300/200?random=${data.id}`}
