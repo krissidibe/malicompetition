@@ -1,5 +1,5 @@
 import ButtonComponent from "@/components/ButtonComponent";
-import CompetitionCardComponent from "@/components/CompetitionCardComponent";
+import CompetitionCardAdminComponent from "@/components/CompetitionCardAdminComponent";
 import MagnifyingGlassIcon from "@/components/ButtonComponent";
 import React from "react";
 import { AiFillMessage } from "react-icons/ai";
@@ -30,7 +30,7 @@ async function Competition() {
         {datas.map((data) => (
           <div key={data.id}>
             {/*            @ts-ignore   */}
-            <CompetitionCardComponent
+            <CompetitionCardAdminComponent
               key={data.id}
               data={data}
               imageUrl={`https://picsum.photos/300/200?random=${data.id}`}
