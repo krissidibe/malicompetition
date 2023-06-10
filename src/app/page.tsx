@@ -25,9 +25,9 @@ const Home = () => {
     })
 
   useEffect(() => {
-    if (session?.status === "authenticated") {
+/*     if (session?.status === "authenticated") {
       router.push("/user");
-    }
+    } */
   });
 
 

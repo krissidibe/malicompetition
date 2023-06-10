@@ -42,7 +42,11 @@ export default function Signin() {
   const router = useRouter();
   const createUser = async () => {
    
- const res =   await fetch(`/api/user`, {
+
+ 
+
+
+ const res =   await fetch(`${process.env.BASE_URL}/api/user`, {
       body: JSON.stringify({
         firstName,
         lastName,
@@ -54,6 +58,7 @@ export default function Signin() {
       }),
       headers: {
         "Content-type": "application/json",
+        "Access-Control-Allow-Origin": "*",
       },
       method: "POST",
     }) ;
