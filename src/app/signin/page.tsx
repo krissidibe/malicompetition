@@ -54,7 +54,6 @@ export default function Signin() {
       }),
       headers: {
         "Content-type": "application/json",
-        'Access-Control-Allow-Origin': '*'
       },
       method: "POST",
     }) ;
