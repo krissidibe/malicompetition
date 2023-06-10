@@ -13,11 +13,15 @@ import {
   ArrowLeftIcon,
   XCircleIcon,
 } from "@heroicons/react/24/solid";
-const SideBarUser = ({ show = true, handleClick = () => {} }) => {
+const SideBarUser = ({ show = true, handleClick = () => {
+  useRouter().refresh();
+
+} }) => {
   const [canClose, setCanClose] = useState(true);
   const session = useSession();
   const router = useRouter();
   useEffect(() => {
+    
     if (session?.status != "authenticated") {
     //  router.push("/");
     }
@@ -43,7 +47,7 @@ const SideBarUser = ({ show = true, handleClick = () => {} }) => {
             width="40"
             height="40"
           />
-          <div>Projet Name</div>
+          <div>DNAJ</div>
         </div>
         {show && (
           <XCircleIcon
@@ -85,6 +89,7 @@ const SideBarUser = ({ show = true, handleClick = () => {} }) => {
       <NavItem
         key={5}
         name="Deconnexion"
+        href="/"
         handleClick={() => signOut()}
         Icon={ArrowLeftIcon}
         className="mb-20"

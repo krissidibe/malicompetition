@@ -69,13 +69,13 @@ const imageRef = useRef(null)
      
       setShowModal((x) => (x = true));
       setMessage(data.message);
-      setFirstName(data.user.firstName);
+     /*  setFirstName(data.user.firstName);
       setLastName(data.user.lastName);
       setEmail(data.user.email);
       setNumber(data.user.number);
       setNumberNina(data.user.nina);
       setBirthDate(new Date(data.user.birthDate));
-      setSexe(data.user.sexe);
+      setSexe(data.user.sexe); */
     }
   };
 
@@ -215,12 +215,12 @@ const imageRef = useRef(null)
                   />
                 </div>
               </div>
-
+ 
               <InputSelectComponent
             options={sexeOptions}
               value={sexe}
               handleChange={(e) => {
-                setSexe(e.target.value);
+                setSexe(  e.target.value);
               }}
               Icon={InformationCircleIcon}
               withIcon={true}
@@ -239,6 +239,7 @@ const imageRef = useRef(null)
             <InputComponent key={1} label="Certificat de nationalité" />
 
             <div className="flex flex-col space-x-0 space-y-2 md:flex-row md:space-y-0 md:w-full md:space-x-2 ">
+              
               <InputComponent
                 value={number}
                 handleChange={(e) => {

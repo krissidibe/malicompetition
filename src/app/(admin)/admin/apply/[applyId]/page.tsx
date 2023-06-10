@@ -1,8 +1,11 @@
 "use client";
 
-import React from "react";
+import React, { useState, FormEvent } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import parse from "html-react-parser";
+import ButtonComponent from "@/components/ButtonComponent";
+import { useModalInfoStore } from "@/store/useModalInfoStore";
+import ModalInfo from "@/components/ModalInfo";
 
 function page() {
   const searchParams = useSearchParams();
@@ -11,15 +14,52 @@ function page() {
 
   const result = JSON.parse(data!);
   const user = JSON.parse(dataUser!);
-  const statutData = [
-    { name: "Brouillon", code: "0", color: "text-black" },
-    { name: "Ouvert", code: "1", color: "text-green-500" },
-    { name: "Fermé", code: "2", color: "text-orange-500" },
-    { name: "Suspendu", code: "3", color: "text-red-500" },
+
+  const statutOptions = [
+    {
+      label: "En cours de validation",
+      value: 0,
+      color: "bg-yellow-500",
+    },
+    {
+      label: "Valider",
+      value: 1,
+      color: "bg-green-500",
+    },
+    {
+      label: "refuser",
+      value: 3,
+      color: "bg-red-500",
+    },
   ];
+
+  const modal = useModalInfoStore();
+  const [modalData, setModalData] = useState("");
+  const updateApply = async (value: string) => {
+   
+    const res = await fetch(`/api/admin/candidature`, {
+      body: JSON.stringify({
+        id: result.id,
+        statut: value,
+      }),
+      headers: {
+        "Content-type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      method: "PATCH",
+    });
+    const data = await res.json();
+    console.log(data);
+
+    setModalData((x) => (x = data.message));
+    if (data) {
+      modal.onOpen();
+    }
+  };
 
   return (
     <div className="flex flex-col h-full">
+       <ModalInfo title="Alert" body={modalData}  /> 
       <p className="pb-2 mb-10 font-semibold border-b-2">
         Les information sur la candidature
       </p>
@@ -49,11 +89,38 @@ function page() {
           <h1 className="my-4 font-bold ">Les pieces jointes</h1>
         </div>
         <div className="w-full h-full p-4 overflow-y-scroll text-sm bg-gray-100 shadow-md md:w-1/2 scrollbar-hide">
-          <h1 className="my-4 font-bold ">Information personnelle</h1>
+          <h1 className="my-4 font-bold ">Information de la candidature</h1>
+          <div className="flex justify-between my-4">
+            <div>Etat de la candidature : </div>
+            <div
+              className={`p-1 text-white text-[12px] px-2 rounded-md ${
+                statutOptions[result.statut].color
+              } `}
+            >
+              {statutOptions[result.statut].label}{" "}
+            </div>
+          </div>
 
-           
-           <div>Note :</div>
-           <textarea className="w-full p-4 my-4 outline-none h-1/2" ></textarea>
+          <div>Note :</div>
+          <textarea className="w-full p-4 my-4 outline-none h-1/2"></textarea>
+          <div className="flex flex-col space-y-4">
+            <ButtonComponent
+              handleClick={() => updateApply("1")}
+              className=""
+              full={true}
+              label={"Valider la candidature"}
+            />
+            <ButtonComponent
+              handleClick={() => updateApply("2")}
+              className=""
+              label={"Refuser la candidature"}
+            />
+            <ButtonComponent
+              handleClick={() => updateApply("0")}
+              className=""
+              label={"Mise en attente"}
+            />
+          </div>
         </div>
       </div>
     </div>

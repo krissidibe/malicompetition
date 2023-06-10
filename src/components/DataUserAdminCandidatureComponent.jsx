@@ -57,14 +57,14 @@ const columns = [
   {
     name: "Genre",
     selector: (row) =>row.author.sexe,
-    cell: row => (<div className={`p-1  rounded-md `} >{ sexeOptions[row.author.sexe].label }</div>),
+    cell: row => (<div className={`p-1  rounded-md `} >{ sexeOptions[0].label }</div>),
    // format: (row) => parse(row.content.substring(0,70)  || ""),
   },
   {
     name: "Statut",
     selector: (row) => row.id,
     sortable: true,
-    cell: row => (<div className={`p-1 text-white text-[12px] px-2 bg-red-400 rounded-md ${statutOptions[row.statut].color } `} >{ statutOptions[row.statut].label }</div>),
+    cell: row => (<div className={`p-1 text-white text-[12px] px-2  rounded-md ${statutOptions[row.statut].color } `} >{ statutOptions[row.statut].label }</div>),
   },
 ];
  

@@ -114,19 +114,18 @@ const storage = multer.diskStorage({
 export async function PATCH(req: NextRequest, res: NextResponse) {
 
   
-    
-/*   const formData =  req.formData() ;
-   
+/*     
+  const formData =  req.formData() ; 
  const dd =  multer({storage}).single("image")
     return new Response(
       JSON.stringify({
         user: "dataUpdate",
-        message: `Votre `,
+        message: `Votre  ${'name'}`,
       })
-    );
+    ); */
  
  //   
-     */
+    
  
 
     const { email, firstName, lastName, number, sexe, password, type,birthDate,
@@ -164,7 +163,8 @@ export async function PATCH(req: NextRequest, res: NextResponse) {
        lastName:lastName,
        sexe:sexe,
        birthDate: birthDate,
-       nina : numberNina
+       nina : numberNina,
+       number : number,
  
       },
     })

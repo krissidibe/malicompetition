@@ -119,7 +119,7 @@ const Home = () => {
             width="64"
             height="64"
           />
-          <p>Projet Name</p>
+          <p>DNAJ</p>
         </div>
         <form
           onSubmit={login2User}

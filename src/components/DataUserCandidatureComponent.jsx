@@ -50,7 +50,7 @@ const columns = [
     name: "Statut",
     selector: (row) => row.statut,
     sortable: true,
-    cell: row => (<div className={`p-1 text-white text-[12px] px-2 bg-red-400 rounded-md ${statutOptions[row.statut].color } `} >{ statutOptions[row.statut].label }</div>),
+    cell: row => (<div className={`p-1 text-white text-[12px] px-2  rounded-md ${statutOptions[row.statut].color } `} >{ statutOptions[row.statut].label }</div>),
   },
 ];
 const mobileColumns = [
@@ -71,7 +71,7 @@ const mobileColumns = [
     name: "Statut",
     selector: (row) => row.statut,
     sortable: true,
-    cell: row => (<div className={`p-1 text-white text-[12px] px-2 bg-red-400 rounded-md ${statutOptions[row.statut].color } `} >{ statutOptions[row.statut].label }</div>),
+    cell: row => (<div className={`p-1 text-white text-[12px] px-2  rounded-md ${statutOptions[row.statut].color } `} >{ statutOptions[row.statut].label }</div>),
   },
 ];
 

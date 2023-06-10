@@ -25,6 +25,8 @@
     "dompurify": "^3.0.3",
     "draft-convert": "^2.1.13",
     "draft-js": "^0.11.7",
+    "exceljs": "^4.3.0",
+    "file-saver": "^2.0.5",
     "firebase": "^9.22.0",
     "formidable": "^2.1.1",
     "fs": "^0.0.1-security",
@@ -42,11 +44,13 @@
     "react-hot-toast": "^2.4.1",
     "react-icons": "^4.8.0",
     "react-select": "^5.7.3",
+    "sheetjs-style": "^0.15.8",
     "styled-components": "^5.3.10",
     "tailwind-scrollbar-hide": "^1.1.7",
     "tailwindcss": "3.3.2",
     "typescript": "5.0.4",
     "uuid": "^9.0.0",
+    "xlsx": "^0.18.5",
     "zustand": "^4.3.8"
   },
   "devDependencies": {

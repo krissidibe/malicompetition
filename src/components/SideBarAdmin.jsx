@@ -30,7 +30,7 @@ const SideBarAdmin = ({show=true,handleClick=()=>{
           width="40"
           height="40"
         />
-        <p className="text-white" >Projet Name</p>
+        <p className="text-white" >DNAJ</p>
      </div>
         { show &&
          <XCircleIcon   onClick={toogleClose}  className={ `cursor-pointer w-6 h-6 md:hidden self text-gray-500 group-hover:text-blue-500 transition-all ease-in-out hover:text-blue-500 hover:scale-110 `}   />
@@ -42,7 +42,7 @@ const SideBarAdmin = ({show=true,handleClick=()=>{
         <NavItem key={1} handleClick={handleClick} name="Tableau de bord"  href="/admin" Icon={HomeIcon} />
         <NavItem key={2} handleClick={handleClick} name="Concours" href="/admin/competitions"  Icon={BookOpenIcon} />
         <NavItem key={3} handleClick={handleClick} name="Candidatures" href="/admin/candidatures"  Icon={AcademicCapIcon} />
-        <NavItem key={4} handleClick={handleClick} name="Profile" href="/admin/profile" Icon={UserIcon}  />
+      {/*   <NavItem key={4} handleClick={handleClick} name="Profile" href="/admin/profile" Icon={UserIcon}  /> */}
        
       </div>
       <NavItem key={5} name="Deconnexion" href="/" Icon={ArrowLeftIcon} className="mb-20" />
