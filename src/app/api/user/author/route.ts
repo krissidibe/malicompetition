@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "../../../../utils/prisma";
 import bcrypt from "bcryptjs";
-import multer from "multer";
+ 
 
 
 export async function GET(req: NextRequest) {
@@ -115,14 +115,14 @@ export async function POST(req: NextRequest, res: NextResponse) {
     }
   }
 }
-
+/* 
 const storage = multer.diskStorage({
   destination: "uploads/",
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
     cb(null, uniqueSuffix)
   }
-})
+}) */
 
 
 export async function PATCH(req: NextRequest, res: NextResponse) {
