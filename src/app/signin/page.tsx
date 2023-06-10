@@ -50,7 +50,7 @@ export default function Signin() {
         number,
         sexe,
         password,
-        type:"create"
+        "type":"create"
       }),
       headers: {
         "Content-type": "application/json",

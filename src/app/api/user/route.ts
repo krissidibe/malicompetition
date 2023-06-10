@@ -10,9 +10,9 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest, res: NextResponse) {
-  const { email, firstName, lastName, number, sexe, password, type,image } =
+  const { email, firstName, lastName, number, sexe, password, type } =
     await req.json();
-  //
+  
 
   if (type == "create") {
     try {
@@ -26,6 +26,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
           JSON.stringify({ user: null, message: "L'email existe déjà" })
         );
 
+
+        
       const passwordCryp = await bcrypt.hash(password, 10);
       const data = await prisma.user.create({
         data: {
