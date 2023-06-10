@@ -25,9 +25,9 @@ const Home = () => {
     })
 
   useEffect(() => {
-/*     if (session?.status === "authenticated") {
+     if (session?.status === "authenticated") {
       router.push("/user");
-    } */
+    }  
   });
 
 
@@ -65,7 +65,7 @@ const Home = () => {
     alert(val) 
     return
     */
-    const res = await fetch("/api/user", {
+    const res = await fetch("/api/author/user", {
       body: JSON.stringify({
         email,
         password,

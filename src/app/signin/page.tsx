@@ -46,7 +46,7 @@ export default function Signin() {
  
 
 
- const res =   await fetch(`${process.env.BASE_URL}/api/user`, {
+ const res =   await fetch(`/api/user/author`, {
       body: JSON.stringify({
         firstName,
         lastName,
