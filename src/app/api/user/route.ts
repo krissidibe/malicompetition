@@ -2,14 +2,26 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "../../../utils/prisma";
 import bcrypt from "bcryptjs";
 import multer from "multer";
+
+
 export async function GET(req: NextRequest) {
-  const { searchParams } = new URL(req.url);
-  console.log("GET REQUEST");
-  console.log(searchParams.get("name"));
-  return new Response(JSON.stringify({ name: "john" }));
-}
+  const datas = [  {
+   "userId": 1,
+   "id": 1,
+   "title": "delectus aut User",
+   "completed": true
+ },
+ {
+   "userId": 1,
+   "id": 2,
+   "title": "User ut nam facilis et officia qui",
+   "completed": true
+ },]
+   return new Response(JSON.stringify(datas));
+ }
 
 export async function POST(req: NextRequest, res: NextResponse) {
+ 
   const { email, firstName, lastName, number, sexe, password, type } =
     await req.json();
   
