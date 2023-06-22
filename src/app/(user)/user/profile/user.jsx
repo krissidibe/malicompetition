@@ -60,7 +60,7 @@ JSON.stringify({
         image:image
       }) */
  const datas = Object.fromEntries(formData);
-    const res = await fetch(`/api/user/author`, {
+    const res = await fetch(`${process.env.BASE_URL}/api/user/author`, {
     
       body:  formData,
       
