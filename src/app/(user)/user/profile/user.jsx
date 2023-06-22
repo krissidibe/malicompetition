@@ -4,12 +4,10 @@ import React, { FormEvent, useState,useRef, useEffect } from "react";
 import InputComponent from "../../../../components/InputComponent";
 import InputSelectComponent from "../../../../components/InputSelectComponent";
 import ButtonComponent from "../../../../components/ButtonComponent";
-import { useRouter } from "next/navigation";
-import { Button } from "primereact/button";
+import { useRouter } from "next/navigation"; 
 import { Toast } from "primereact/toast";
-import multer from "multer";
-import { v4 as uuidv4 } from "uuid";
-
+ 
+ 
 import {
    
   InformationCircleIcon,
@@ -17,7 +15,7 @@ import {
 import ModalComponent from "@/components/ModalComponent";
 import { useSession } from "next-auth/react";
 import { Calendar } from "primereact/calendar";
-function Profile() {
+function UserProfile({data}) {
   const router = useRouter();
   const sexeOptions = [{
     label :"Homme",value:0,
@@ -29,7 +27,7 @@ function Profile() {
 
 const imageRef = useRef(null)
   const toast = useRef < Toast > null;
-  const { data: session, status } = useSession();
+
   const show = () => {
     toast.current?.show({
       severity: "info",
@@ -39,17 +37,19 @@ const imageRef = useRef(null)
   };
   const createUser = async (e) => {
     e.preventDefault();
- const formData = new FormData()
- formData.append("image",image)
- formData.append("name","name")
+    const formData  = new FormData();
 
- const datas = Object.fromEntries(formData);
-    const res = await fetch(`/api/user`, {
-     // body: JSON.stringify(datas),
-      headers: {
-        "Content-type": "multipart/form-data", 
-      },
-      body: JSON.stringify({
+ formData.append("file",image)
+ formData.append("firstName",firstName)
+ formData.append("lastName",lastName)
+ formData.append("email",email)
+ formData.append("number",number)
+ formData.append("sexe",sexe)
+ formData.append("birthDate",birthDate)
+ formData.append("numberNina",numberNina)
+ //formData.append("name","name")
+/* 
+JSON.stringify({
         firstName,
         lastName,
         email,
@@ -58,7 +58,11 @@ const imageRef = useRef(null)
         birthDate,
         numberNina,
         image:image
-      }),
+      }) */
+ const datas = Object.fromEntries(formData);
+    const res = await fetch(`/api/user/author`, {
+    
+      body:  formData,
       
       method: "PATCH",
     });
@@ -91,33 +95,35 @@ const imageRef = useRef(null)
   const [numberNina, setNumberNina] = useState("");
   const [message, setMessage] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const { data: session, status } =  useSession();
   const getUser = async () => {
-    const res = await fetch(`/api/user`, {
-      body: JSON.stringify({
-        email: session?.user.email,
-        type: "user",
-      }),
-      headers: {
-        "Content-type": "multipart/form-data",
-        "Access-Control-Allow-Origin": "*",
-      },
-      method: "POST",
-    });
-    const data = await res.json();
-    console.log(data);
+ 
+ 
+    
+    setImage(data.user.image ?? "");
     setFirstName(data.user.firstName ?? "");
     setLastName(data.user.lastName ?? "");
     setEmail(data.user.email ?? "");
     setNumber(data.user.number ?? "");
     setNumberNina(data.user.nina ?? ""); 
     setBirthDate(new Date(data.user.birthDate));
- 
+    setIsLoading((x)=> x = false)
     setSexe(data.user.sexe ?? "");
   };
 
   useEffect(() => {
-    let user = {};
+if(status == "loading"){
+ 
+}
+   
+     
+      getUser();
+   (function(){
     getUser();
+   });
+ 
+   
 
     return () => {};
   }, []);
@@ -132,6 +138,7 @@ const imageRef = useRef(null)
           title={"Message"}
         />
       )}
+     <p>{JSON.stringify(session?.user)}</p>
       <form
       encType="multipart/form-data"
         onSubmit={createUser}
@@ -156,7 +163,7 @@ const imageRef = useRef(null)
           }} className="self-center w-32 h-32 my-4 bg-white rounded-full shadow-md md:self-start">
             <img
             //image.length != null ? URL.createObjectURL(image)  : 
-             src={"https://picsum.photos/300/200?random=10" }
+             src={image }
               alt="image"
               className="object-cover w-full h-full rounded-lg rounded-t-lg white"
             />
@@ -269,4 +276,4 @@ const imageRef = useRef(null)
   );
 }
 
-export default Profile;
+export default UserProfile;

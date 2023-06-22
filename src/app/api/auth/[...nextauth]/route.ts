@@ -50,7 +50,7 @@ export const authOptions: AuthOptions = {
     }),
   ],
   callbacks:{
-    session({ session, token }) {
+    session({ session, token ,}) {
       session.user.id = token.id;
       session.user.email = token.email;
       session.user.role = token.role;
@@ -73,7 +73,8 @@ export const authOptions: AuthOptions = {
   },
 
   session:{
-    strategy:"jwt"
+    strategy:"jwt",
+    maxAge: 3 * 24 * 60 * 60 *1000,
   },
   secret: process.env.JWT_SECRET,
 };

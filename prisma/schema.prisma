@@ -43,6 +43,7 @@ model User {
   id            String        @id @default(cuid())
   email         String        @unique
   firstName     String
+  image        String?        @default("")
   lastName      String
   number        String
   birthDate     DateTime?     @db.Date
