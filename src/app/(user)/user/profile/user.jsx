@@ -37,6 +37,8 @@ const imageRef = useRef(null)
   };
   const createUser = async (e) => {
     e.preventDefault();
+
+
     const formData  = new FormData();
 
  formData.append("file",image)
@@ -47,6 +49,8 @@ const imageRef = useRef(null)
  formData.append("sexe",sexe)
  formData.append("birthDate",birthDate)
  formData.append("numberNina",numberNina)
+ 
+
  //formData.append("name","name")
 /* 
 JSON.stringify({
@@ -60,7 +64,7 @@ JSON.stringify({
         image:image
       }) */
  const datas = Object.fromEntries(formData);
-    const res = await fetch(`${process.env.BASE_URL}/api/user/author`, {
+    const res = await fetch(`/api/user/author`, {
     
       body:  formData,
       

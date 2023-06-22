@@ -8,15 +8,14 @@ import path, { join } from "path";
 import { stat, mkdir, writeFile } from "fs/promises";
 import * as dateFn from "date-fns";
 import { getSession } from "next-auth/react";
-/* 
+
 export const config = {
   api: {
     bodyParser: false,
   },
 };
- */
+
 export async function GET(req: NextRequest) {
-  //kk
   const datas = [
     {
       userId: 1,
