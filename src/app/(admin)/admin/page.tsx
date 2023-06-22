@@ -8,7 +8,7 @@ import { EnvelopeIcon, LockClosedIcon } from "@heroicons/react/24/solid";
 import { GetServerSideProps, NextPage } from "next";
 import { useEffect } from "react";
  
-const inter = Inter({ subsets: ["latin"] });
+/* const inter = Inter({ subsets: ["latin"] }); */
 
 const Home =() => {
   
