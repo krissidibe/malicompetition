@@ -143,14 +143,15 @@ export async function PATCH(req: NextRequest, res: NextResponse) {
   }
 
   const buffer = Buffer.from(await file.arrayBuffer());
-  const relativeUploadDir = `/uploads/${dateFn.format(Date.now(), "dd-MM-Y")}`;
+  //const relativeUploadDir = `/uploads/${dateFn.format(Date.now(), "dd-MM-Y")}`;
+  const relativeUploadDir = `/uploads/`;
   const uploadDir = join(process.cwd(), "public", relativeUploadDir);
 
   try {
     await stat(uploadDir);
   } catch (e: any) {
     if (e.code === "ENOENT") {
-      await mkdir(uploadDir, { recursive: true });
+    //  await mkdir(uploadDir, { recursive: true });
     } else {
       console.error(
         "Error while trying to create directory when uploading a file\n",
