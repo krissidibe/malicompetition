@@ -138,7 +138,7 @@ if(status == "loading"){
           title={"Message"}
         />
       )}
-     <p>{JSON.stringify(session?.user)}</p>
+    
       <form
       encType="multipart/form-data"
         onSubmit={createUser}

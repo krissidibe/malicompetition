@@ -8,13 +8,13 @@ import path, { join } from "path";
 import { stat, mkdir, writeFile } from "fs/promises";
 import * as dateFn from "date-fns";
 import { getSession } from "next-auth/react";
-
+/* 
 export const config = {
   api: {
     bodyParser: false,
   },
 };
-
+ */
 export async function GET(req: NextRequest) {
   const datas = [
     {
@@ -71,10 +71,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
   }
   if (type == "user") {
  
-    const session = await getSession() 
-    console.log("email");
-    console.log(session?.user);
-    console.log("email");
+   
     try {
       const user = await prisma.user.findUnique({
         where: {
