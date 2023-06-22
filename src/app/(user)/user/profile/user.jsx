@@ -139,14 +139,14 @@ if(status == "loading"){
         />
       )}
     
-      <form
+      <form 
       encType="multipart/form-data"
         onSubmit={createUser}
         method="post"
         className="flex flex-col w-full h-full p-6 overflow-y-scroll bg-gray-100 rounded-lg shadow-sm "
       >
         <h1 className="text-[24px] flex justify-between border-black  ">
-          <span> Informations a renseigné</span>
+          <span> Informations à renseigné</span>
         </h1>
 
         <div className="mt-2 mb-4 border-b border-solid  max-w-[320px]"></div>
