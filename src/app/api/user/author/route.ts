@@ -147,7 +147,7 @@ export async function PATCH(req: NextRequest, res: NextResponse) {
   const relativeUploadDir = `/uploads/`;
   const uploadDir = join(process.cwd(), "public", relativeUploadDir);
 
-  try {
+/*   try {
     await stat(uploadDir);
   } catch (e: any) {
     if (e.code === "ENOENT") {
@@ -162,7 +162,7 @@ export async function PATCH(req: NextRequest, res: NextResponse) {
         { status: 500 }
       );
     }
-  }
+  } */
 
   try {
     const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
@@ -189,7 +189,7 @@ export async function PATCH(req: NextRequest, res: NextResponse) {
     });
     return new Response(
       JSON.stringify({
-        user: "dataUpdate",
+        user: dataUpdate,
         message: `Votre profile est modifier  ${val}`,
       })
     );
