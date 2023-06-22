@@ -3,12 +3,25 @@ import CompetitionCardAdminComponent from "@/components/CompetitionCardAdminComp
 import MagnifyingGlassIcon from "@/components/ButtonComponent";
 import React from "react";
 import { AiFillMessage } from "react-icons/ai";
- 
+import {prisma} from '../../../../utils/prisma'
 async function Competition() {
-  const res = await fetch(`${process.env.BASE_URL}/api/admin/competition`, {
+/*   const res = await fetch(`${process.env.BASE_URL}/api/admin/competition`, {
     next: { revalidate: 0 },
   });
-  const datas: any[] = await res.json();
+  const datas: any[] = await res.json(); */
+  const datas =  await prisma.competition.findMany({
+    orderBy: [
+      {
+        createdAt: "desc",
+      },
+      {
+        title: "desc",
+      },
+    ],
+
+    include: { candidatures: {include:{competition:{}}} },
+  });
+
   return (
     <div className="flex flex-col">
       <div className="flex items-center pb-2 mb-8 border-b-2 ">
